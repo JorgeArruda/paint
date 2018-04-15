@@ -1,5 +1,5 @@
-function createAresta(id, x1, y1, x2, y2) {
-    console.log("createAresta", id, x1, y1, x2, y2);
+function svgAresta(id, x1, y1, x2, y2) {
+    console.log("sgvAresta", id, x1, y1, x2, y2);
     if (typeof (id) != 'string')
         return;
     var svgns = "http://www.w3.org/2000/svg";
@@ -16,18 +16,19 @@ function createAresta(id, x1, y1, x2, y2) {
     return line;
 }
 
-function createTriangle(id, vertices) {
-    console.log("createTriangle", vertices);
+function svgPolygon(id, vertices) {
+    console.log("svgPolygon", vertices);
     if (typeof (id) != 'string')
         return;
     var svgns = "http://www.w3.org/2000/svg";
     var triangle = document.createElementNS(svgns, "polygon");
     triangle.setAttribute("id", id);
-    var vertice1 = "" + (vertices[0][0]+5) + "," + (vertices[0][1]+5);
-    var vertice2 = "" + (vertices[1][0]+5) + "," + (vertices[1][1]+5);
-    var vertice3 = "" + (vertices[2][0]+5) + "," + (vertices[2][1]+5);
+    var vertice = "";
+    for (let index = 0; index < vertices.length; index++) {
+        vertice = vertice + (vertices[index][0]+5) + "," + (vertices[index][1]+5)+"  ";
+    }
 
-    triangle.setAttribute("points", "" + vertice1+" "+vertice2+" "+vertice3);
+    triangle.setAttribute("points", vertice);
 
     // Borda
     triangle.setAttribute("fill", data.color);
