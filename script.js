@@ -29,28 +29,17 @@ function createVertice(id) {
     return vertice;
 }
 
-function createAresta(id, x1, y1, x2, y2) {
-    console.log("createAresta", id, x1, y1, x2, y2);
-    if (typeof (id) != 'string')
-        return;
-    var svgns = "http://www.w3.org/2000/svg";
-    var line = document.createElementNS(svgns, "line");
-    line.setAttribute("id", id);
-    line.setAttribute("x1", x1 + 6);
-    line.setAttribute("y1", y1 + 6);
-    line.setAttribute("x2", x2 + 6);
-    line.setAttribute("y2", y2 + 6);
-    line.setAttribute("stroke", "#000000");
-    line.setAttribute("stroke-width", 2);
-    //line.setAttribute("stroke-dasharray", "5 4");
-
-    return line;
-}
-
 function createPolygon(drawing) {
     if (drawing.numVertice == 2) {
         var points = drawing.vertices;
         return createAresta("line" + data.anim.length, points[1][1], points[1][2], points[0][1], points[0][2]);
+    }
+    if (drawing.numVertice == 3) {
+        var points = [];
+        points.push([drawing.vertices[0][1], drawing.vertices[0][2]]);
+        points.push([drawing.vertices[1][1], drawing.vertices[1][2]]);
+        points.push([drawing.vertices[2][1], drawing.vertices[2][2]]);
+        return createTriangle("triangle" + data.anim.length, points);
     }
 }
 
@@ -59,6 +48,13 @@ function updatePolygon(drawing, id) {
         var points = drawing.vertices;
         var size = drawing.vertices.length;
         return createAresta("line" + id, points[1][1], points[1][2], points[0][1], points[0][2]);
+    }
+    if (drawing.numVertice == 3) {
+        var points = [];
+        points.push([drawing.vertices[0][1], drawing.vertices[0][2]]);
+        points.push([drawing.vertices[1][1], drawing.vertices[1][2]]);
+        points.push([drawing.vertices[2][1], drawing.vertices[2][2]]);
+        return createTriangle("triangle" + id, points);
     }
 }
 

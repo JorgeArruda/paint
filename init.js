@@ -38,7 +38,6 @@ function init() {
                 data.drawing = undefined;
             else
                 data.drawing = ev.target.id;
-
             removeVertices();
             mouse.vertice = [];
             

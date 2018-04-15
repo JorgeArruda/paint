@@ -14,7 +14,6 @@ function dragover_handler(ev) {
     console.log("dragover_handler()");
     var id = ev.dataTransfer.getData("text");
     var anim = findVertice(id);
-    console.log("jjjj",anim);
     anim[0].vertices[anim[2]][0].style.left = (ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2))+"px";
     anim[0].vertices[anim[2]][0].style.top =  (ev.pageY - 71)+"px";
     anim[0].vertices[anim[2]][1] = ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2);
