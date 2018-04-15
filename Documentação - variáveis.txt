@@ -1,0 +1,20 @@
+mouse.vertice   Temp
+mouse.polygon   Temp
+    
+    Deadline - Removidos ao mudar de operação ou confirmar //Draw
+
+data.anim   Cons
+    - type:    point | line | triangle | rectangle | star | polygon
+    - numVertice: 1  |   2  |    3     |     4     |   5  |    100
+    - vertices: [ <img> , posX, posY]
+    - svg : <svg> # Desenho
+
+<img>
+    - id: "vertice" + data.anim.lenght + data.anim.vertices.lenght
+    - src: "image/vertice.svg"
+    - className: "vertice"
+    - draggable: true
+    - ondragstart: dragstart_handler   # function
+
+<svg>
+    - id: data.anim.type + data.anim.lenght   # Ex: line2 etc
