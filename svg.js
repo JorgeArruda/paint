@@ -27,7 +27,7 @@ function svgPolygon(id, vertices) {
     var triangle = document.createElementNS(svgns, "polygon");
     triangle.setAttribute("id", id);
     var vertice = "";
-    for (let index = 0; index < vertices.length; index++) {
+    for (var index = 0; index < vertices.length; index++) {
         vertice = vertice + (vertices[index][0] + 5) + "," + (vertices[index][1] + 5) + "  ";
     }
 

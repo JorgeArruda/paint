@@ -13,10 +13,9 @@ function dragstart_handler(ev) {
 }
 
 function dragover_handler(ev) {
-    console.log("dragover_handler()");
     var id = ev.dataTransfer.getData("text");
-    var anim = findVertice(id);
-    if (anim) {
+    var anim = findVertice(mouse.idVertice);
+    if (anim != undefined) {
         anim[0].vertices[anim[2]][0].style.left = (ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2)) + "px";
         anim[0].vertices[anim[2]][0].style.top = (ev.pageY - 71) + "px";
         anim[0].vertices[anim[2]][1] = ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2);
@@ -41,9 +40,22 @@ function drop_handler(ev) {
     object.style.left = (ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2)) + "px";
     object.style.top = (ev.pageY - 71) + "px";
     console.log("drop_handler() -", id, " Move to", object.style.left, object.style.top);
+    
+    var anim = findVertice(id);
+    console.log("dragover_handler()", findVertice(id));
+    if (anim != undefined) {
+        console.log("Redraw", anim);
+        anim[0].vertices[anim[2]][0].style.left = (ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2)) + "px";
+        anim[0].vertices[anim[2]][0].style.top = (ev.pageY - 71) + "px";
+        anim[0].vertices[anim[2]][1] = ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2);
+        anim[0].vertices[anim[2]][2] = ev.pageY - 71;
+        anim[0].svg.parentNode.removeChild(anim[0].svg);
+        anim[0].svg = updatePolygon(anim[0], String(anim[1] + 1));
+        document.getElementById("svg").appendChild(anim[0].svg);
+    }
 
     // Update point
-    for (let index = 0; index < mouse.vertice.length; index++) {
+    for (var index = 0; index < mouse.vertice.length; index++) {
         if (mouse.vertice[index][0].id == id) {
             mouse.vertice[index][1] = ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2);
             mouse.vertice[index][2] = ev.pageY - 71;

@@ -39,7 +39,7 @@ function createPolygon(drawing) {
     }
     if (drawing.numVertice > 2) {
         var points = [];
-        for (let index = 0; index < drawing.vertices.length; index++) {
+        for (var index = 0; index < drawing.vertices.length; index++) {
             points.push([drawing.vertices[index][1], drawing.vertices[index][2]]);
         }
         return svgPolygon(data.drawing + data.anim.length, points);
@@ -54,7 +54,7 @@ function updatePolygon(drawing, id) {
     }
     if (drawing.numVertice > 2) {
         var points = [];
-        for (let index = 0; index < drawing.vertices.length; index++) {
+        for (var index = 0; index < drawing.vertices.length; index++) {
             points.push([drawing.vertices[index][1], drawing.vertices[index][2]]);
         }
         return svgPolygon(data.drawing + id, points);
@@ -125,11 +125,10 @@ function getNumVertice(type) {
 }
 
 function findVertice(idVertice) {
-    var ret = []
-    for (let index = 0; index < data.anim.length; index++) {
-        for (let vert = 0; vert < data.anim[index].vertices.length; vert++) {
+    var ret = [];
+    for (var index = 0; index < data.anim.length; index++) {
+        for (var vert = 0; vert < data.anim[index].vertices.length; vert++) {
             if (data.anim[index].vertices[vert][0].id == idVertice) {
-                console.log("findVertice", data.anim[index]);
                 ret.push(data.anim[index]);
                 ret.push(index);
                 ret.push(vert);
@@ -141,9 +140,8 @@ function findVertice(idVertice) {
 
 function findPolygon(idPolygon) {
     var ret = [];
-    for (let index = 0; index < data.anim.length; index++) {
+    for (var index = 0; index < data.anim.length; index++) {
         if (data.anim[index].svg.id == idPolygon) {
-            console.log("findVertice", data.anim[index]);
             ret.push(data.anim[index]);
             ret.push(index);
             return ret;
@@ -159,7 +157,7 @@ function drawAnim(anim) {
     if (svg == undefined || svg == null)
         data.svg.appendChild(anim.svg);
 
-    for (let index = 0; index < anim.vertices.length; index++) {
+    for (var index = 0; index < anim.vertices.length; index++) {
         var vertice = document.getElementById(anim.vertices[index][0].id);
         if (vertice == undefined || vertice == null)
             document.getElementById("divCanvas").appendChild(anim.vertices[index][0]);
