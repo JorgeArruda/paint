@@ -1,5 +1,4 @@
 function svgAresta(id, x1, y1, x2, y2) {
-    console.log("sgvAresta", id, x1, y1, x2, y2);
     if (typeof (id) != 'string')
         return;
     var svgns = "http://www.w3.org/2000/svg";
@@ -20,7 +19,6 @@ function svgAresta(id, x1, y1, x2, y2) {
 }
 
 function svgPolygon(id, vertices) {
-    console.log("svgPolygon", vertices);
     if (typeof (id) != 'string')
         return;
     var svgns = "http://www.w3.org/2000/svg";

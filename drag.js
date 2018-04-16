@@ -16,10 +16,14 @@ function dragover_handler(ev) {
     var id = ev.dataTransfer.getData("text");
     var anim = findVertice(mouse.idVertice);
     if (anim != undefined) {
+        anim[0].vertices[anim[2]][0].parentNode.removeChild(anim[0].vertices[anim[2]][0]);
+
         anim[0].vertices[anim[2]][0].style.left = (ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2)) + "px";
         anim[0].vertices[anim[2]][0].style.top = (ev.pageY - 71) + "px";
         anim[0].vertices[anim[2]][1] = ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2);
         anim[0].vertices[anim[2]][2] = ev.pageY - 71;
+        document.getElementById("divCanvas").appendChild(anim[0].vertices[anim[2]][0]);
+
         anim[0].svg.parentNode.removeChild(anim[0].svg);
         anim[0].svg = updatePolygon(anim[0], String(anim[1] + 1));
         document.getElementById("svg").appendChild(anim[0].svg);
@@ -36,11 +40,14 @@ function drop_handler(ev) {
     // Pega o id do alvo e adiciona o elemento que foi movido para o DOM do alvo
     var id = ev.dataTransfer.getData("text");
     var object = document.getElementById(id);
+    object.parentElement.removeChild(object);
 
     object.style.left = (ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2)) + "px";
     object.style.top = (ev.pageY - 71) + "px";
     console.log("drop_handler() -", id, " Move to", object.style.left, object.style.top);
-    
+
+    document.getElementById("divCanvas").appendChild(object);
+
     var anim = findVertice(id);
     console.log("dragover_handler()", findVertice(id));
     if (anim != undefined) {
