@@ -108,6 +108,26 @@
             transform: scale(1.2);
             opacity: 1;
         }
+
+        polygon {
+            position: absolute;
+            opacity: 1;
+        }
+
+        polygon:hover {
+            opacity: 0.7;
+            box-shadow: rgb(204, 204, 204) 0px 0px 10px;
+        }
+
+        line {
+            position: absolute;
+            opacity: 1;
+        }
+
+        line:hover {
+            opacity: 0.7;
+            box-shadow: rgb(204, 204, 204) 0px 0px 10px;
+        }
     </style>
 </head>
 
@@ -162,12 +182,13 @@
         <img id="colorIcon" src="icons/colors-luma.svg" style="width: 19px; height: 19px; z-index: 6; position: absolute; margin-left: 485px; margin-top: 7px;">
         <input id="color" name="cor" type="color" onchange="data.color = document.getElementById('color').value;" style="width: 60px; height: 19px; z-index: 6; position: absolute; margin-left: 510px; margin-top: 7px;">
 
+        <img id="edit" title="Edit" class="drawing" src="icons/edit-select.svg" style="margin-left: 485px; margin-top: 31px;">
 
     </div>
 
     <div id="divCanvas">
         <canvas id='canvas' class="canvas" width="400px" height="400px" ondrop="drop_handler(event);" ondragover="dragover_handler(event);"></canvas>
-        <svg id="svg" class="canvas" width="400px" height="400px" style="z-index: 0;"></svg>
+        <svg id="svg" class="canvas" width="400px" height="400px" style="z-index: 0;" ondrop="drop_handler(event);" ondragover="dragover_handler(event);"></svg>
     </div>
 
 </body>

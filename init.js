@@ -1,20 +1,20 @@
 function init() {
     data.canvas = document.getElementById("canvas");
     data.context = data.canvas.getContext("2d");
-
+    data.svg = document.getElementById("svg");
+    console.log("svg",svg);
     data.canvas.onmousemove = function (e) {
         if (mouse.move) {
             console.log("canvas.onmousemove()", mouse.idVertice);
         }
     };
 
-    data.canvas.onclick = function (e) {
+    data.svg.onclick = data.canvas.onclick = function (e) {
         console.log("canvas.onclick()");
-        if (data.drawing == undefined)
+        if (data.drawing == undefined || data.drawing == "edit")
             return;
         mouse.vertice.push([0, e.pageX - (window.innerWidth / 2 - data.canvas.width / 2), e.pageY - 71]);
         drawVertice(e.pageX - (window.innerWidth / 2 - data.canvas.width / 2), e.pageY - 71);
-
     };
 
     var buttonDraws = document.getElementsByClassName("drawing");
@@ -34,13 +34,18 @@ function init() {
                 }
             }
 
-            if (data.drawing == ev.target.id)
+            if (data.drawing == ev.target.id) {
                 data.drawing = undefined;
-            else
+                data.canvas.style.zIndex = "1";
+                data.svg.style.zIndex = "0";
+            } else {
                 data.drawing = ev.target.id;
+                data.canvas.style.zIndex = "0";
+                data.svg.style.zIndex = "1";
+            }
             removeVertices();
             mouse.vertice = [];
-            
+
         };
     }
 }
