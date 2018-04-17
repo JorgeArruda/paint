@@ -12,6 +12,7 @@ var mouse = {
     clickX: [],
     clickY: [],
     paint: undefined,
+    select: undefined,
     vertice: [],
     polygon: [],
     move: false,
@@ -35,14 +36,14 @@ function createPolygon(drawing) {
     console.log("createPolygon(drawing)", getNumVertice(data.drawing));
     if (drawing.numVertice == 2) {
         var points = drawing.vertices;
-        return svgAresta("line" + data.anim.length, points[1][1], points[1][2], points[0][1], points[0][2]);
+        return svgAresta("line_" + data.anim.length, points[1][1], points[1][2], points[0][1], points[0][2]);
     }
     if (drawing.numVertice > 2) {
         var points = [];
         for (var index = 0; index < drawing.vertices.length; index++) {
             points.push([drawing.vertices[index][1], drawing.vertices[index][2]]);
         }
-        return svgPolygon(data.drawing + data.anim.length, points);
+        return svgPolygon(data.drawing + "_" + data.anim.length, points);
     }
 }
 
@@ -50,14 +51,22 @@ function updatePolygon(drawing, id) {
     if (drawing.numVertice == 2) {
         var points = drawing.vertices;
         var size = drawing.vertices.length;
-        return svgAresta("line" + id, points[1][1], points[1][2], points[0][1], points[0][2]);
+        return svgAresta("line_" + id, points[1][1], points[1][2], points[0][1], points[0][2]);
     }
     if (drawing.numVertice > 2) {
         var points = [];
         for (var index = 0; index < drawing.vertices.length; index++) {
             points.push([drawing.vertices[index][1], drawing.vertices[index][2]]);
         }
-        return svgPolygon(data.drawing + id, points);
+        return svgPolygon(data.drawing + "_" + id, points);
+    }
+    if (drawing.type == "select") {
+        var points = [];
+        points.push([drawing.vertices[0][1], drawing.vertices[0][2]]);
+        points.push([drawing.vertices[1][1], drawing.vertices[0][2]]);
+        points.push([drawing.vertices[1][1], drawing.vertices[1][2]]);
+        points.push([drawing.vertices[0][1], drawing.vertices[1][2]]);
+        return svgSelect(data.drawing + "_" + id, points);
     }
 }
 
@@ -104,8 +113,19 @@ function removeVertices() {
     if (vertices.length <= 0)
         return;
     for (var index = vertices.length - 1; index >= 0; index--) {
-        console.log("Delete", index);
+        console.log("Delete", vertices[index]);
         vertices[index].parentNode.removeChild(vertices[index]);
+    }
+}
+function removeSelects() {
+    var vertices = document.getElementsByTagName("polygon");
+    if (vertices.length <= 0)
+        return;
+    for (var index = vertices.length - 1; index >= 0; index--) {
+        if (vertices[index].id.substring(0,6) == "select"){
+            console.log("Delete", vertices[index]);
+            vertices[index].parentNode.removeChild(vertices[index]);
+        }
     }
 }
 

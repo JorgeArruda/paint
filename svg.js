@@ -19,6 +19,7 @@ function svgAresta(id, x1, y1, x2, y2) {
 }
 
 function svgPolygon(id, vertices) {
+    console.log("svgPolygon(id, vertices)",id, vertices);
     if (typeof (id) != 'string')
         return;
     var svgns = "http://www.w3.org/2000/svg";
@@ -36,6 +37,36 @@ function svgPolygon(id, vertices) {
     triangle.setAttribute("fill-opacity", "1");
     // Preenchimento
     triangle.setAttribute("stroke", data.color);
+    triangle.setAttribute("stroke-opacity", "1");
+
+    //triangle.setAttribute("stroke-dasharray", "5 4");
+
+    //triangle.setAttribute("className", "svg");
+    //triangle.setAttribute("onmouseover", "focus(evt);");
+    triangle.setAttribute("onclick", "click(evt);");
+    triangle.setAttribute("z-index", "3");
+    return triangle;
+}
+
+function svgSelect(id, vertices) {
+    console.log("svgPolygon(id, vertices)",id, vertices);
+    if (typeof (id) != 'string')
+        return;
+    var svgns = "http://www.w3.org/2000/svg";
+    var triangle = document.createElementNS(svgns, "polygon");
+    triangle.setAttribute("id", id);
+    var vertice = "";
+    for (var index = 0; index < vertices.length; index++) {
+        vertice = vertice + (vertices[index][0] + 5) + "," + (vertices[index][1] + 5) + "  ";
+    }
+
+    triangle.setAttribute("points", vertice);
+
+    // Preenchimento
+    triangle.setAttribute("fill", data.color);
+    triangle.setAttribute("fill-opacity", "0.0");
+    // Borda
+    triangle.setAttribute("stroke", "black");
     triangle.setAttribute("stroke-opacity", "1");
 
     //triangle.setAttribute("stroke-dasharray", "5 4");
