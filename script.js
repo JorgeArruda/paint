@@ -41,7 +41,7 @@ function updateVertex(vertex, posX, posY) {
 }
 
 function drawVertice(posX, posY) {
-    var vertice = createVertice("vertice_" + data.anim.length + "_" + (mouse.vertice.length + 1));
+    var vertice = createVertex("vertice_" + data.anim.length + "_" + (mouse.vertice.length + 1));
     mouse.vertice.push([vertice, posX, posY]);
 
     console.log("drawVertice() - Create in", posX, posY);

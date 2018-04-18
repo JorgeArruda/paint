@@ -10,7 +10,7 @@
     <script type="text/javascript" src="drag.js"></script>
     <script type="text/javascript" src="svg.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="style.css" >
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
@@ -59,7 +59,7 @@
         <img src="image/limit.png" width="2px" height="50" style="position: absolute; margin-left: 470px; margin-top: 5px;">
 
         <img id="colorIcon" aria-hidden="true" src="icons/colors-luma.svg" style="width: 19px; height: 19px; z-index: 6; position: absolute; margin-left: 485px; margin-top: 7px;">
-        <input id="color" name="cor" type="color" onchange="data.color = document.getElementById('color').value;" style="width: 60px; height: 19px; z-index: 6; position: absolute; margin-left: 510px; margin-top: 7px;">
+        <input id="color" name="cor" type="color" onchange="data.color = document.getElementById('color').value;" style="cursor: pointer; width: 60px; height: 19px; z-index: 6; position: absolute; margin-left: 510px; margin-top: 7px;">
 
         <img id="edit" title="Edit" class="drawing" src="icons/edit.svg" style="margin-left: 485px; margin-top: 31px;">
 
@@ -72,6 +72,10 @@
         <svg id="svg" class="canvas" width="400px" height="400px" style="z-index: 0;" ondrop="drop_handler(event);" ondragover="dragover_handler(event);"></svg>
     </div>
     <div id="divEdit">
+        <div class="btn-group">
+            <button type="checkbox" class="btn">Open</button>
+            <button type="checkbox" class="btn">Close</button>
+        </div>
     </div>
 
 </body>

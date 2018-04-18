@@ -19,6 +19,7 @@ body {
 #divEdit {
     z-index: 5;
     position: fixed;
+    display: inline-flex;
     left: 0%;
     top: 61px;
     margin-left: 0px;
@@ -63,7 +64,9 @@ body {
     position: absolute;
 }
 
+
 .button {
+    cursor: pointer;
     z-index: 6;
     width: 19px;
     height: 19px;
@@ -79,6 +82,7 @@ body {
 }
 
 .drawing {
+    cursor: pointer;
     z-index: 6;
     width: 19px;
     height: 19px;
@@ -107,6 +111,7 @@ body {
 .vertice:hover {
     transform: scale(1.2);
     opacity: 1;
+    cursor: move;
 }
 
 line {

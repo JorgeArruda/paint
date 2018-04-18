@@ -2,7 +2,7 @@ function dragstart_handler(ev) {
     data.canvas.style.zIndex = "1";
     data.svg.style.zIndex = "0";
     // Adiciona o id do elemento em questão ao objeto de transferência de dados (dataTransfer)
-    ev.dataTransfer.setData("text/plain", ev.target.id);
+    //ev.dataTransfer.setData("text/plain", ev.target.id);
     console.log("dragstart_handler()", ev.target.id);
     mouse.idVertice = ev.target.id;
     //ev.target.style.visibility = "hidden"; 
@@ -13,7 +13,7 @@ function dragstart_handler(ev) {
 }
 
 function dragover_handler(ev) {
-    var id = ev.dataTransfer.getData("text");
+    //var id = ev.dataTransfer.getData("text");
     var anim = findVertice(mouse.idVertice);
     if (anim != undefined) {
         if (anim[0].vertices[anim[2]][0].parentNode != null)
@@ -55,24 +55,24 @@ function dragover_handler(ev) {
     }
     ev.preventDefault();
     // Define o dropEffect para ser do tipo move
-    ev.dataTransfer.dropEffect = "move";
+    //ev.dataTransfer.dropEffect = "move";
 }
 
 function drop_handler(ev) {
     ev.preventDefault();
     // Pega o id do alvo e adiciona o elemento que foi movido para o DOM do alvo
-    var id = ev.dataTransfer.getData("text");
-    var object = document.getElementById(id);
+    //var id = ev.dataTransfer.getData("text");
+    var object = document.getElementById(mouse.idVertice);
     if (object != null && object.parentElement != null)
         object.parentElement.removeChild(object);
 
     object.style.left = (ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2)) + "px";
     object.style.top = (ev.pageY - 71) + "px";
-    console.log("drop_handler() -", id, " Move to", object.style.left, object.style.top);
+    console.log("drop_handler() -", mouse.idVertice, " Move to", object.style.left, object.style.top);
 
 
-    var anim = findVertice(id);
-    console.log("dragover_handler()", findVertice(id));
+    var anim = findVertice(mouse.idVertice);
+    console.log("dragover_handler()", findVertice(mouse.idVertice));
     if (anim != undefined) {
         console.log("Redraw", anim);
         updateVertex(anim[0].vertices[anim[2]], ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2), ev.pageY - 71)
@@ -84,10 +84,10 @@ function drop_handler(ev) {
 
     // Update point
     for (var index = 0; index < mouse.vertice.length; index++) {
-        if (mouse.vertice[index][0].id == id) {
+        if (mouse.vertice[index][0].id == mouse.idVertice) {
             mouse.vertice[index][1] = ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2);
             mouse.vertice[index][2] = ev.pageY - 71;
-            console.log("Update point", id, mouse.vertice[index][1], mouse.vertice[index][2]);
+            console.log("Update point", mouse.idVertice, mouse.vertice[index][1], mouse.vertice[index][2]);
         }
     }
     mouse.move = false;

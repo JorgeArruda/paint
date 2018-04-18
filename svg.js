@@ -69,7 +69,7 @@ function click(evt) {
     drawAnim(anim[0]);
 }
 
-function createVertice(id) {
+function createVertex(id) {
     if (typeof (id) != 'string')
         return;
     var vertice = document.createElement('img');
