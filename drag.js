@@ -19,10 +19,7 @@ function dragover_handler(ev) {
         if (anim[0].vertices[anim[2]][0].parentNode != null)
             anim[0].vertices[anim[2]][0].parentNode.removeChild(anim[0].vertices[anim[2]][0]);
 
-        anim[0].vertices[anim[2]][0].style.left = (ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2)) + "px";
-        anim[0].vertices[anim[2]][0].style.top = (ev.pageY - 71) + "px";
-        anim[0].vertices[anim[2]][1] = ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2);
-        anim[0].vertices[anim[2]][2] = ev.pageY - 71;
+        updateVertex(anim[0].vertices[anim[2]], ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2), ev.pageY - 71)
 
         anim[0].svg.parentNode.removeChild(anim[0].svg);
         anim[0].svg = updatePolygon(anim[0], String(anim[1] + 1));
@@ -30,10 +27,32 @@ function dragover_handler(ev) {
         //setTimeout(function(){
         document.getElementById("divCanvas").appendChild(anim[0].vertices[anim[2]][0]);
         //}, 15);
-        
     }
+    if (data.drawing == "select" && mouse.vertice.length == 2) {
+        mouse.select = false;
+        data.drawing = "select";
+        var index = 1;
+        if (mouse.idVertice == mouse.vertice[mouse.vertice.length - 2][0].id)
+            index = 0;
+        mouse.vertice[index][0].parentElement.removeChild(mouse.vertice[index][0]);
 
+        console.log(" 2 Select ", mouse.vertice[index][0].id, " - Move to", ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2), ev.pageY - 71);
+        
+        updateVertex(mouse.vertice[index], ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2), ev.pageY - 71);
+        document.getElementById("divCanvas").appendChild(mouse.vertice[index][0]);
 
+        var drawing = createDrawing(data.drawing, mouse.vertice, mouse.polygon[mouse.polygon.length - 1]);
+
+        console.log("redrawPolygon()");
+        var anim = mouse.polygon[mouse.polygon.length-1];
+        if (anim != undefined) {
+            console.log("redrawPolygon()");
+            anim.parentNode.removeChild(anim);
+            anim = updatePolygon(drawing, String(data.anim.length + 1));
+            document.getElementById("svg").appendChild(anim);
+            mouse.polygon[mouse.polygon.length-1] = anim;
+        }
+    }
     ev.preventDefault();
     // Define o dropEffect para ser do tipo move
     ev.dataTransfer.dropEffect = "move";
@@ -56,10 +75,8 @@ function drop_handler(ev) {
     console.log("dragover_handler()", findVertice(id));
     if (anim != undefined) {
         console.log("Redraw", anim);
-        anim[0].vertices[anim[2]][0].style.left = (ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2)) + "px";
-        anim[0].vertices[anim[2]][0].style.top = (ev.pageY - 71) + "px";
-        anim[0].vertices[anim[2]][1] = ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2);
-        anim[0].vertices[anim[2]][2] = ev.pageY - 71;
+        updateVertex(anim[0].vertices[anim[2]], ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2), ev.pageY - 71)
+        
         anim[0].svg.parentNode.removeChild(anim[0].svg);
         anim[0].svg = updatePolygon(anim[0], String(anim[1]));
         document.getElementById("svg").appendChild(anim[0].svg);
@@ -75,43 +92,33 @@ function drop_handler(ev) {
     }
     mouse.move = false;
     console.log("drag - finish");
-    document.getElementById("divCanvas").appendChild(object);   
-    if (data.drawing == "select" && mouse.vertice.length > 0){
+    document.getElementById("divCanvas").appendChild(object);
+    if (data.drawing == "select" && mouse.vertice.length > 0) {
         mouse.select = false;
         data.drawing = "select";
 
         mouse.vertice[mouse.vertice.length - 1][0].parentElement.removeChild(mouse.vertice[mouse.vertice.length - 1][0]);
 
-        console.log("Select ",mouse.vertice[mouse.vertice.length - 1][0].id," - Move to", ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2), ev.pageY - 71);
-        mouse.vertice[mouse.vertice.length - 1][0].style.left = (ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2)) + "px";
-        mouse.vertice[mouse.vertice.length - 1][0].style.top = (ev.pageY - 71) + "px";
-        mouse.vertice[mouse.vertice.length - 1][1] = ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2);
-        mouse.vertice[mouse.vertice.length - 1][2] = ev.pageY - 71;
+        console.log("Select ", mouse.vertice[mouse.vertice.length - 1][0].id, " - Move to", ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2), ev.pageY - 71);
+        updateVertex(mouse.vertice[mouse.vertice.length - 1], ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2), ev.pageY - 71);
+        document.getElementById("divCanvas").appendChild(mouse.vertice[mouse.vertice.length - 1][0]);
 
-        data.anim.push(createDrawing(data.drawing, mouse.vertice, mouse.polygon[mouse.polygon.length-1]));
-        
+        data.anim.push(createDrawing(data.drawing, mouse.vertice, mouse.polygon[mouse.polygon.length - 1]));
+
         var anim = findVertice(mouse.vertice[mouse.vertice.length - 1][0].id);
         if (anim != undefined) {
-            console.log(anim);
             anim[0].svg.parentNode.removeChild(anim[0].svg);
             anim[0].svg = updatePolygon(anim[0], String(anim[1] + 1));
             document.getElementById("svg").appendChild(anim[0].svg);
         }
-        var element = document.getElementById("divCanvas");
-        element.appendChild(mouse.vertice[mouse.vertice.length - 1][0]);
 
         mouse.polygon.push(polygon);
-        
-        //mouse.vertice[mouse.vertice.length - 2][0].draggable = mouse.vertice[mouse.vertice.length - 1][0].draggable = "true";
-        //mouse.vertice[mouse.vertice.length - 2][0].ondragstart = mouse.vertice[mouse.vertice.length - 1][0].ondragstart = dragstart_handler;
-        //mouse.vertice[mouse.vertice.length - 2][0].ondragend = mouse.vertice[mouse.vertice.length - 1][0].ondragend = dragEnd;
+
         mouse.vertice = [];
     }
-    mouse.select = false; 
 }
 
 function dragEnd(ev) {
-
     data.canvas.style.zIndex = "0";
     data.svg.style.zIndex = "1";
 }

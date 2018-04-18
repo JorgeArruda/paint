@@ -3,140 +3,19 @@
 
 <head>
     <meta charset="utf-8">
-    <script type="text/javascript" src="script.js"></script>
     <script type="text/javascript" src="init.js"></script>
+    <script type="text/javascript" src="data.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript" src="event.js"></script>
     <script type="text/javascript" src="drag.js"></script>
     <script type="text/javascript" src="svg.js"></script>
 
-    <style>
-        body {
-            padding-top: 0;
-            margin: 0;
-        }
-
-        #divTools {
-            height: 61px;
-            color: gray;
-            width: 100%;
-            z-index: 5;
-            background: rgba(88, 79, 73, 0.78);
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: cover;
-            background-attachment: fixed;
-            font-weight: bold;
-            font-size: 12px;
-            line-height: 32px;
-            font-family: inherit;
-            border-bottom: 1px solid #827979;
-            position: fixed;
-            opacity: 100%;
-        }
-
-        #divCanvas {
-            margin-left: -200px;
-            width: 400px;
-            height: 400px;
-            z-index: 0;
-            position: absolute;
-            left: 50%;
-            top: 71px;
-        }
-
-        #canvas {
-            border: 1px solid gray;
-            z-index: 1;
-        }
-
-        .canvas {
-            margin: 0;
-            position: absolute;
-
-        }
-
-        .text {
-            z-index: 6;
-            font-size: 13px;
-            line-height: 32px;
-            font-family: inherit;
-            color: white;
-            position: absolute;
-        }
-
-        .button {
-            z-index: 6;
-            width: 19px;
-            height: 19px;
-            position: absolute;
-            -moz-border-radius: 5px;
-            -webkit-border-radius: 5px;
-            border-radius: 5px;
-        }
-
-        .button:hover {
-            transform: scale(1.2);
-            box-shadow: rgb(204, 204, 204) 0px 0px 10px;
-        }
-
-        .drawing {
-            z-index: 6;
-            width: 19px;
-            height: 19px;
-            position: absolute;
-            -moz-border-radius: 5px;
-            -webkit-border-radius: 5px;
-            border-radius: 5px;
-        }
-
-        .drawing:hover {
-            transform: scale(1.2);
-            box-shadow: rgb(204, 204, 204) 0px 0px 10px;
-            background: royalblue;
-        }
-
-        .vertice {
-            width: 11px;
-            height: 11px;
-            position: absolute;
-            left: 100px;
-            top: 100px;
-            z-index: 3;
-            opacity: 0.7;
-        }
-
-        .vertice:hover {
-            transform: scale(1.2);
-            opacity: 1;
-        }
-
-        polygon {
-            position: absolute;
-            opacity: 1;
-        }
-
-        polygon:hover {
-            opacity: 0.7;
-            box-shadow: rgb(204, 204, 204) 0px 0px 10px;
-        }
-
-        line {
-            position: absolute;
-            opacity: 1;
-        }
-
-        line:hover {
-            opacity: 0.7;
-            box-shadow: rgb(204, 204, 204) 0px 0px 10px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css" >
 </head>
 
 <body>
 
     <div id="divTools">
-        <img src="image/background-gray.png" style="z-index: 6; width:100%; height: 61px; position: absolute; margin-left: 0px; margin-top: 0px;">
-
-
         <img id="open" title="Open archive" class="button" src="icons/open.svg" onclick="buttonClick()" style="margin-left: 15px; margin-top: 21px;">
         <img id="save" title="Save archive" class="button" src="icons/save.svg" onclick="buttonClick()" style="margin-left: 45px; margin-top: 21px;">
 
@@ -191,6 +70,8 @@
     <div id="divCanvas">
         <canvas id='canvas' class="canvas" width="400px" height="400px" ondrop="drop_handler(event);" ondragover="dragover_handler(event);"></canvas>
         <svg id="svg" class="canvas" width="400px" height="400px" style="z-index: 0;" ondrop="drop_handler(event);" ondragover="dragover_handler(event);"></svg>
+    </div>
+    <div id="divEdit">
     </div>
 
 </body>

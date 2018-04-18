@@ -1,64 +1,27 @@
-var data = {
-    canvas: undefined,
-    context: undefined,
-    svg: undefined,
-    drawing: undefined,
-    color: undefined,
-    states: [],
-    anim: []
-};
-
-var mouse = {
-    clickX: [],
-    clickY: [],
-    paint: undefined,
-    select: undefined,
-    vertice: [],
-    polygon: [],
-    move: false,
-    idVertice: 0
-};
-
-function createVertice(id) {
-    if (typeof (id) != 'string')
-        return;
-    var vertice = document.createElement('img');
-    vertice.id = id;
-    vertice.src = "image/vertice.svg";
-    vertice.draggable = "true";
-    vertice.ondragstart = dragstart_handler;
-    vertice.ondragend = dragEnd;
-    vertice.className = "vertice";
-    return vertice;
-}
-
 function createPolygon(drawing) {
     console.log("createPolygon(drawing)", getNumVertice(data.drawing));
-    if (drawing.numVertice == 2) {
-        var points = drawing.vertices;
-        return svgAresta("line_" + data.anim.length, points[1][1], points[1][2], points[0][1], points[0][2]);
-    }
+    if (drawing.numVertice == 2)
+        return svgAresta("line_" + data.anim.length, drawing.vertices[1][1], drawing.vertices[1][2], drawing.vertices[0][1], drawing.vertices[0][2]);
+
     if (drawing.numVertice > 2) {
         var points = [];
-        for (var index = 0; index < drawing.vertices.length; index++) {
+        for (var index = 0; index < drawing.vertices.length; index++)
             points.push([drawing.vertices[index][1], drawing.vertices[index][2]]);
-        }
+
         return svgPolygon(data.drawing + "_" + data.anim.length, points);
     }
 }
 
 function updatePolygon(drawing, id) {
-    if (drawing.numVertice == 2) {
-        var points = drawing.vertices;
-        var size = drawing.vertices.length;
-        return svgAresta("line_" + id, points[1][1], points[1][2], points[0][1], points[0][2]);
-    }
+    if (drawing.numVertice == 2)
+        return svgAresta("line_" + id, drawing.vertices[1][1], drawing.vertices[1][2], drawing.vertices[0][1], drawing.vertices[0][2]);
+
     if (drawing.numVertice > 2) {
         var points = [];
-        for (var index = 0; index < drawing.vertices.length; index++) {
+        for (var index = 0; index < drawing.vertices.length; index++)
             points.push([drawing.vertices[index][1], drawing.vertices[index][2]]);
-        }
-        return svgPolygon(data.drawing + "_" + id, points);
+
+        return svgPolygon(drawing.type + "_" + id, points);
     }
     if (drawing.type == "select") {
         var points = [];
@@ -66,46 +29,39 @@ function updatePolygon(drawing, id) {
         points.push([drawing.vertices[1][1], drawing.vertices[0][2]]);
         points.push([drawing.vertices[1][1], drawing.vertices[1][2]]);
         points.push([drawing.vertices[0][1], drawing.vertices[1][2]]);
-        return svgSelect(data.drawing + "_" + id, points);
+        return svgSelect(drawing.type + "_" + id, points);
     }
+}
+
+function updateVertex(vertex, posX, posY) {
+    vertex[0].style.left = (posX) + "px";
+    vertex[0].style.top = (posY) + "px";
+    vertex[1] = posX;
+    vertex[2] = posY;
 }
 
 function drawVertice(posX, posY) {
-    var vertice = createVertice("vertice" + data.anim.length + mouse.vertice.length);
-    mouse.vertice[mouse.vertice.length - 1][0] = vertice;
+    var vertice = createVertice("vertice_" + data.anim.length + "_" + (mouse.vertice.length + 1));
+    mouse.vertice.push([vertice, posX, posY]);
 
-    console.log("vertice() - Create in", posX, posY);
+    console.log("drawVertice() - Create in", posX, posY);
     vertice.style.left = (posX) + "px";
     vertice.style.top = (posY) + "px";
 
-    var element = document.getElementById("divCanvas");
-    element.appendChild(vertice);
+    document.getElementById("divCanvas").appendChild(vertice);
 
+    // Check num of vertex and draw polygon/line
     if (mouse.vertice.length % getNumVertice(data.drawing) == 0) {
         data.anim.push(createDrawing(data.drawing, mouse.vertice, undefined));
 
-        data.anim[data.anim.length - 1].svg = createPolygon(data.anim[data.anim.length - 1], data.anim.length);
-        mouse.polygon.push(data.anim[data.anim.length - 1].svg);
+        data.anim[data.anim.length - 1].svg = createPolygon(data.anim[data.anim.length - 1]);
+        //mouse.polygon.push(data.anim[data.anim.length - 1].svg);
 
-        if (data.anim[data.anim.length - 1].svg != undefined) {
-            var svg = document.getElementById("svg");
-            svg.appendChild(data.anim[data.anim.length - 1].svg);
-        }
+        if (data.anim[data.anim.length - 1].svg != undefined)
+            document.getElementById("svg").appendChild(data.anim[data.anim.length - 1].svg);
+
         mouse.vertice = [];
-
     }
-
-}
-
-function createDrawing(operation, vertice, svg) {
-    var drawing = {
-        type: operation,
-        vertices: vertice,
-        svg: svg,
-        numVertice: getNumVertice(operation)
-    };
-
-    return drawing;
 }
 
 function removeVertices() {
@@ -117,12 +73,13 @@ function removeVertices() {
         vertices[index].parentNode.removeChild(vertices[index]);
     }
 }
+
 function removeSelects() {
     var vertices = document.getElementsByTagName("polygon");
     if (vertices.length <= 0)
         return;
     for (var index = vertices.length - 1; index >= 0; index--) {
-        if (vertices[index].id.substring(0,6) == "select"){
+        if (vertices[index].id.substring(0, 6) == "select") {
             console.log("Delete", vertices[index]);
             vertices[index].parentNode.removeChild(vertices[index]);
         }
