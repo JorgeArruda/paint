@@ -1,0 +1,130 @@
+body {
+    padding-top: 0;
+    margin: 0;
+}
+
+#divTools {
+    z-index: 5;
+    position: fixed;
+    height: 61px;
+    width: 100%;
+    color: rgb(22, 21, 21);
+    border-bottom: 1px solid #403a3a;
+    background: rgb(22, 21, 21);
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 32px;
+}
+
+#divEdit {
+    z-index: 5;
+    position: fixed;
+    left: 0%;
+    top: 61px;
+    margin-left: 0px;
+    width: 120px;
+    height: 100%;
+    background: rgba(88, 79, 73, 0.78);
+    border-right: 1px solid #403a3a;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 32px;
+    font-family: inherit;
+}
+
+#divCanvas {
+    z-index: 0;
+    position: absolute;
+    margin-left: -200px;
+    left: 50%;
+    top: 71px;
+    width: 400px;
+    height: 400px;
+}
+
+#canvas {
+    z-index: 1;
+    margin: 0;
+    position: absolute;
+    border: 1px solid gray;
+}
+
+#svg {
+    margin: 0;
+    position: absolute;
+}
+
+.text {
+    z-index: 6;
+    font-size: 13px;
+    line-height: 32px;
+    font-family: inherit;
+    color: white;
+    position: absolute;
+}
+
+.button {
+    z-index: 6;
+    width: 19px;
+    height: 19px;
+    position: absolute;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.button:hover {
+    transform: scale(1.2);
+    box-shadow: rgb(204, 204, 204) 0px 0px 10px;
+}
+
+.drawing {
+    z-index: 6;
+    width: 19px;
+    height: 19px;
+    position: absolute;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.drawing:hover {
+    transform: scale(1.2);
+    box-shadow: rgb(204, 204, 204) 0px 0px 10px;
+    background: royalblue;
+}
+
+.vertice {
+    position: absolute;
+    left: 100px;
+    top: 100px;
+    z-index: 3;
+    width: 11px;
+    height: 11px;
+    opacity: 0.7;
+}
+
+.vertice:hover {
+    transform: scale(1.2);
+    opacity: 1;
+}
+
+line {
+    position: absolute;
+    opacity: 1;
+}
+
+line:hover {
+    opacity: 0.7;
+    box-shadow: rgb(204, 204, 204) 0px 0px 10px;
+}
+
+polygon {
+    position: absolute;
+    opacity: 1;
+}
+
+polygon:hover {
+    opacity: 0.8;
+    box-shadow: rgb(204, 204, 204) 0px 0px 10px;
+}
