@@ -71,10 +71,9 @@
         <canvas id='canvas' class="canvas" width="400px" height="400px" ondrop="drop_handler(event);" ondragover="dragover_handler(event);"></canvas>
         <svg id="svg" class="canvas" width="400px" height="400px" style="z-index: 0;" ondrop="drop_handler(event);" ondragover="dragover_handler(event);"></svg>
     </div>
-    <div id="divEdit">
-        <div class="btn-group">
-            <button type="checkbox" class="btn">Open</button>
-            <button type="checkbox" class="btn">Close</button>
+    <div id="divEdit" hidden="true">
+        <div class="editRectangle">
+            <p class="textButton">Draw</p>
         </div>
     </div>
 

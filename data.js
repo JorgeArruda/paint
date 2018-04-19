@@ -2,10 +2,10 @@ var data = {
     canvas: undefined,
     context: undefined,
     svg: undefined,
-    drawing: undefined, // createDrawing()
+    drawing: undefined,
     color: undefined,
     states: [],
-    anim: []
+    anim: []  // createDrawing()
 };
 
 var mouse = {
