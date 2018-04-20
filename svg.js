@@ -81,3 +81,7 @@ function createVertex(id) {
     vertice.className = "vertice";
     return vertice;
 }
+function displayNone(id){
+    document.getElementById(id).style.opacity = 0;
+    document.getElementById(id).style.dispray = 'none';
+}

@@ -67,15 +67,25 @@
 
     </div>
 
+    <div id="divEdit" hidden="true">
+        <div class="editRectangle">
+            <p class="textButton">Draw</p>
+            <div class="radioButton" >
+                <input id="openPolygon" type="radio" name="typePolygon">
+                <label for="openPolygon" class="text" style="cursor: pointer; font-size: 12px; position: relative;">Open Polygon</label>
+                <input id="closedPolygon" type="radio" name="typePolygon" checked>
+                <label for="closedPolygon" class="text" style="cursor: pointer; font-size: 12px; position: relative;">Closed Polygon</label>
+
+            </div>
+
+        </div>
+    </div>
+    
     <div id="divCanvas">
         <canvas id='canvas' class="canvas" width="400px" height="400px" ondrop="drop_handler(event);" ondragover="dragover_handler(event);"></canvas>
         <svg id="svg" class="canvas" width="400px" height="400px" style="z-index: 0;" ondrop="drop_handler(event);" ondragover="dragover_handler(event);"></svg>
     </div>
-    <div id="divEdit" hidden="true">
-        <div class="editRectangle">
-            <p class="textButton">Draw</p>
-        </div>
-    </div>
+    
 
 </body>
 
