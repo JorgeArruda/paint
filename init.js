@@ -4,6 +4,7 @@ function init() {
     data.svg = document.getElementById("svg");
     console.log("svg", svg);
 
+    data.color = document.getElementById('color').value;
     setEvent();
 }
 

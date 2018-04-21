@@ -1,27 +1,45 @@
 function createPolygon(drawing) {
-    console.log("createPolygon(drawing)", getNumVertice(data.drawing));
-    if (drawing.numVertice == 2)
-        return svgAresta("line_" + data.anim.length, drawing.vertices[1][1], drawing.vertices[1][2], drawing.vertices[0][1], drawing.vertices[0][2]);
+    console.log("createPolygon(",drawing.type,")", getNumVertice(drawing.type));
 
-    if (drawing.numVertice > 2) {
+    if (drawing.type == "openPolygon") {
         var points = [];
         for (var index = 0; index < drawing.vertices.length; index++)
             points.push([drawing.vertices[index][1], drawing.vertices[index][2]]);
 
-        return svgPolygon(data.drawing + "_" + data.anim.length, points);
+        return svgOpenPolygon(data.drawing + "_" + data.anim.length, points);
+    }
+
+    if (drawing.numVertice == 2)
+        return svgAresta("line_" + data.anim.length, drawing.vertices[1][1], drawing.vertices[1][2], drawing.vertices[0][1], drawing.vertices[0][2]);
+
+    if (drawing.numVertice > 2 || drawing.type == "closedPolygon") {
+        var points = [];
+        for (var index = 0; index < drawing.vertices.length; index++)
+            points.push([drawing.vertices[index][1], drawing.vertices[index][2]]);
+
+        return svgClosedPolygon(data.drawing + "_" + data.anim.length, points);
     }
 }
 
 function updatePolygon(drawing, id) {
-    if (drawing.numVertice == 2)
-        return svgAresta("line_" + id, drawing.vertices[1][1], drawing.vertices[1][2], drawing.vertices[0][1], drawing.vertices[0][2]);
 
-    if (drawing.numVertice > 2) {
+    if (drawing.type == "openPolygon") {
         var points = [];
         for (var index = 0; index < drawing.vertices.length; index++)
             points.push([drawing.vertices[index][1], drawing.vertices[index][2]]);
 
-        return svgPolygon(drawing.type + "_" + id, points);
+        return svgOpenPolygon(data.drawing + "_" + id, points);
+    }
+
+    if (drawing.numVertice == 2)
+        return svgAresta("line_" + id, drawing.vertices[1][1], drawing.vertices[1][2], drawing.vertices[0][1], drawing.vertices[0][2]);
+
+    if (drawing.numVertice > 2 || drawing.type == "closedPolygon") {
+        var points = [];
+        for (var index = 0; index < drawing.vertices.length; index++)
+            points.push([drawing.vertices[index][1], drawing.vertices[index][2]]);
+
+        return svgClosedPolygon(drawing.type + "_" + id, points);
     }
     if (drawing.type == "select") {
         var points = [];
@@ -34,8 +52,8 @@ function updatePolygon(drawing, id) {
 }
 
 function updateVertex(vertex, posX, posY) {
-    vertex[0].style.left = (posX-5) + "px";
-    vertex[0].style.top = (posY-5) + "px";
+    vertex[0].style.left = (posX - 5) + "px";
+    vertex[0].style.top = (posY - 5) + "px";
     vertex[1] = posX;
     vertex[2] = posY;
 }
@@ -45,13 +63,13 @@ function drawVertice(posX, posY) {
     mouse.vertice.push([vertice, posX, posY]);
 
     console.log("drawVertice() - Create in", posX, posY);
-    vertice.style.left = (posX-5) + "px";
-    vertice.style.top = (posY-5) + "px";
+    vertice.style.left = (posX - 5) + "px";
+    vertice.style.top = (posY - 5) + "px";
 
     document.getElementById("divCanvas").appendChild(vertice);
 
     // Check num of vertex and draw polygon/line
-    if (mouse.vertice.length % getNumVertice(data.drawing) == 0) {
+    if (data.drawing != "polygon" && data.drawing != "openPolygon" && data.drawing != "closedPolygon" && mouse.vertice.length % getNumVertice(data.drawing) == 0) {
         data.anim.push(createDrawing(data.drawing, mouse.vertice, undefined));
 
         data.anim[data.anim.length - 1].svg = createPolygon(data.anim[data.anim.length - 1]);
@@ -97,8 +115,8 @@ function getNumVertice(type) {
         return 4;
     if (type == "star")
         return 5;
-    if (type == "polygon")
-        return 100;
+    if (type == "openPolygon" || type == "openPolygon")
+        return mouse.vertice.length;
 }
 
 function findVertice(idVertice) {
@@ -139,4 +157,22 @@ function drawAnim(anim) {
         if (vertice == undefined || vertice == null)
             document.getElementById("divCanvas").appendChild(anim.vertices[index][0]);
     }
+}
+
+function drawPolygon() {
+    if (mouse.vertice.length < 3)
+        return;
+    if (document.getElementById("openPolygon").checked) 
+        data.drawing = "openPolygon";
+    else
+        data.drawing = "closedPolygon";
+    data.anim.push(createDrawing(data.drawing, mouse.vertice, undefined));
+
+    data.anim[data.anim.length - 1].svg = createPolygon(data.anim[data.anim.length - 1]);
+    data.anim[data.anim.length - 1].numVertice = mouse.vertice.length;
+
+    if (data.anim[data.anim.length - 1].svg != undefined)
+        document.getElementById("svg").appendChild(data.anim[data.anim.length - 1].svg);
+
+    mouse.vertice = [];
 }
