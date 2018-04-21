@@ -21,7 +21,7 @@ function svgPolygon(id, vertices) {
     triangle.setAttribute("id", id);
     var vertex = "";
     for (var index = 0; index < vertices.length; index++) 
-        vertex = vertex + (vertices[index][0] + 5) + "," + (vertices[index][1] + 5) + "  ";
+        vertex = vertex + (vertices[index][0]) + "," + (vertices[index][1]) + "  ";
     
 
     triangle.setAttribute("points", vertex);
@@ -45,7 +45,7 @@ function svgSelect(id, vertices) {
     triangle.setAttribute("id", id);
     var vertex = "";
     for (var index = 0; index < vertices.length; index++) {
-        vertex = vertex + (vertices[index][0] + 5) + "," + (vertices[index][1] + 5) + "  ";
+        vertex = vertex + (vertices[index][0]) + "," + (vertices[index][1]) + "  ";
     }
 
     triangle.setAttribute("points", vertex);

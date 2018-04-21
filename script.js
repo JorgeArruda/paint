@@ -34,8 +34,8 @@ function updatePolygon(drawing, id) {
 }
 
 function updateVertex(vertex, posX, posY) {
-    vertex[0].style.left = (posX) + "px";
-    vertex[0].style.top = (posY) + "px";
+    vertex[0].style.left = (posX-5) + "px";
+    vertex[0].style.top = (posY-5) + "px";
     vertex[1] = posX;
     vertex[2] = posY;
 }
@@ -45,8 +45,8 @@ function drawVertice(posX, posY) {
     mouse.vertice.push([vertice, posX, posY]);
 
     console.log("drawVertice() - Create in", posX, posY);
-    vertice.style.left = (posX) + "px";
-    vertice.style.top = (posY) + "px";
+    vertice.style.left = (posX-5) + "px";
+    vertice.style.top = (posY-5) + "px";
 
     document.getElementById("divCanvas").appendChild(vertice);
 

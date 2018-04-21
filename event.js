@@ -50,10 +50,10 @@ function setEvent() {
     data.svg.onmouseout = data.canvas.onmouseout = function (e) {
         mouse.select = false;
     };
-
     var buttonDraws = document.getElementsByClassName("drawing");
     for (var index = 0; index < buttonDraws.length; index++) {
         buttonDraws[index].onclick = function (ev) {
+            var buttonDraw = document.getElementsByClassName("drawing");
             console.log("drawingClick", ev.target.id);
             if (ev.target.style.boxShadow == "rgb(204, 204, 204) 0px 0px 10px") {
                 ev.target.style.boxShadow = "none";
@@ -61,10 +61,9 @@ function setEvent() {
                 ev.target.style.boxShadow = "rgb(204, 204, 204) 0px 0px 10px";
             }
 
-            var buttonDraws = document.getElementsByClassName("drawing");
-            for (var index = 0; index < buttonDraws.length; index++) {
-                if (ev.target.id != buttonDraws[index].id) {
-                    buttonDraws[index].style.boxShadow = "none";
+            for (var index = 0; index < buttonDraw.length; index++) {
+                if (ev.target.id != buttonDraw[index].id) {
+                    buttonDraw[index].style.boxShadow = "none";
                 }
             }
 
@@ -72,10 +71,27 @@ function setEvent() {
                 data.drawing = undefined;
                 data.canvas.style.zIndex = "1";
                 data.svg.style.zIndex = "0";
+                if (ev.target.id == "polygon"){
+                    console.log("ev.target.id == 'polygon'");
+                    //document.getElementById("divEdit").style.dispray = 'inline-flex';
+                    document.getElementById("divEdit").style.opacity = 0;
+                    document.getElementById("divEdit").style.marginLeft = '-200px';
+                }
             } else {
                 data.drawing = ev.target.id;
                 data.canvas.style.zIndex = "0";
                 data.svg.style.zIndex = "1";
+                if (ev.target.id == "polygon"){
+                    console.log("ev.target.id == 'polygon'");
+                    //document.getElementById("divEdit").style.dispray = 'inline-flex';
+                    document.getElementById("divEdit").style.opacity = 1;
+                    document.getElementById("divEdit").style.marginLeft = '0px';
+                }else{
+                    console.log("ev.target.id != 'polygon'");
+                    document.getElementById("divEdit").style.opacity = 0;
+                    //document.getElementById("divEdit").style.dispray = 'none';
+                    document.getElementById("divEdit").style.marginLeft = '-200px';
+                }
             }
             removeVertices();
             removeSelects();
