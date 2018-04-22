@@ -1,8 +1,7 @@
 function dragstart_handler(ev) {
+    // up canvas element
     data.canvas.style.zIndex = "1";
     data.svg.style.zIndex = "0";
-    // Adiciona o id do elemento em questão ao objeto de transferência de dados (dataTransfer)
-    //ev.dataTransfer.setData("text/plain", ev.target.id);
     console.log("dragstart_handler()", ev.target.id);
     mouse.idVertice = ev.target.id;
     //ev.target.style.visibility = "hidden"; 
@@ -13,7 +12,6 @@ function dragstart_handler(ev) {
 }
 
 function dragover_handler(ev) {
-    //var id = ev.dataTransfer.getData("text");
     var anim = findVertice(mouse.idVertice);
     if (anim != undefined) {
         if (anim[0].vertices[anim[2]][0].parentNode != null)

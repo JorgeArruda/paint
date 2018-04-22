@@ -119,31 +119,6 @@ function getNumVertice(type) {
         return mouse.vertice.length;
 }
 
-function findVertice(idVertice) {
-    var ret = [];
-    for (var index = 0; index < data.anim.length; index++) {
-        for (var vert = 0; vert < data.anim[index].vertices.length; vert++) {
-            if (data.anim[index].vertices[vert][0].id == idVertice) {
-                ret.push(data.anim[index]);
-                ret.push(index);
-                ret.push(vert);
-                return ret;
-            }
-        }
-    }
-}
-
-function findPolygon(idPolygon) {
-    var ret = [];
-    for (var index = 0; index < data.anim.length; index++) {
-        if (data.anim[index].svg.id == idPolygon) {
-            ret.push(data.anim[index]);
-            ret.push(index);
-            return ret;
-        }
-    }
-}
-
 function drawAnim(anim) {
     if (anim == undefined || anim == null)
         return;
@@ -159,20 +134,3 @@ function drawAnim(anim) {
     }
 }
 
-function drawPolygon() {
-    if (mouse.vertice.length < 3)
-        return;
-    if (document.getElementById("openPolygon").checked) 
-        data.drawing = "openPolygon";
-    else
-        data.drawing = "closedPolygon";
-    data.anim.push(createDrawing(data.drawing, mouse.vertice, undefined));
-
-    data.anim[data.anim.length - 1].svg = createPolygon(data.anim[data.anim.length - 1]);
-    data.anim[data.anim.length - 1].numVertice = mouse.vertice.length;
-
-    if (data.anim[data.anim.length - 1].svg != undefined)
-        document.getElementById("svg").appendChild(data.anim[data.anim.length - 1].svg);
-
-    mouse.vertice = [];
-}

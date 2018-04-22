@@ -3,10 +3,10 @@ function svgAresta(id, x1, y1, x2, y2) {
         return;
     var line = document.createElementNS("http://www.w3.org/2000/svg", "line");
     line.setAttribute("id", id);
-    line.setAttribute("x1", x1 + 6);
-    line.setAttribute("y1", y1 + 6);
-    line.setAttribute("x2", x2 + 6);
-    line.setAttribute("y2", y2 + 6);
+    line.setAttribute("x1", x1);
+    line.setAttribute("y1", y1);
+    line.setAttribute("x2", x2);
+    line.setAttribute("y2", y2);
     line.setAttribute("stroke", "#000000");
     line.setAttribute("stroke-width", 2);
     line.setAttribute("onclick", "click(evt);");
@@ -90,6 +90,8 @@ function click(evt) {
     if (data.drawing != "edit")
         return;
     var anim = findPolygon(evt.target.id);
+    
+    removeVertices();
     drawAnim(anim[0]);
 }
 
@@ -105,7 +107,21 @@ function createVertex(id) {
     vertice.className = "vertice";
     return vertice;
 }
-function displayNone(id){
-    document.getElementById(id).style.opacity = 0;
-    document.getElementById(id).style.dispray = 'none';
+
+function drawPolygon() {
+    if (mouse.vertice.length < 3)
+        return;
+    if (document.getElementById("openPolygon").checked) 
+        data.drawing = "openPolygon";
+    else
+        data.drawing = "closedPolygon";
+    data.anim.push(createDrawing(data.drawing, mouse.vertice, undefined));
+
+    data.anim[data.anim.length - 1].svg = createPolygon(data.anim[data.anim.length - 1]);
+    data.anim[data.anim.length - 1].numVertice = mouse.vertice.length;
+
+    if (data.anim[data.anim.length - 1].svg != undefined)
+        document.getElementById("svg").appendChild(data.anim[data.anim.length - 1].svg);
+
+    mouse.vertice = [];
 }
