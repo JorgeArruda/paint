@@ -17,20 +17,21 @@ body {
 }
 
 #divEdit {
+    padding: 5px;
     z-index: 5;
     position: fixed;
     float: left;
     display: inline-flex;
     left: 0%;
-    top: 61px;
+    top: 60px;
     margin-left: -200px;
     width: 120px;
     height: 100%;
     background: rgba(88, 79, 73, 0.78);
     border-right: 1px solid #403a3a;
-    font-weight: bold;
-    font-size: 12px;
-    line-height: 32px;
+    /*! font-weight: bold; */
+    font-size: 8px;
+    line-height: 30px;
     font-family: inherit;
     opacity: 0;
     transition: opacity 0.5s linear;
@@ -43,10 +44,11 @@ body {
     vertical-align: middle;
 }
 
-.radioButton {
+.radioButtons {
     background: rgba(63, 58, 55, 0.78);
     box-shadow: rgb(0, 0, 0) 2px 2px 5px;
     border: 1px solid #403a3a;
+    padding: 5px;
 }
 .radioButton:hover {
     box-shadow: rgb(0, 0, 0) 3px 3px 10px;

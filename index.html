@@ -25,7 +25,7 @@
 
         <img id="undo" title="Undo" class="button" src="icons/edit-undo.svg" onclick="buttonClick()" style="margin-left: 93px; margin-top: 7px;">
         <img id="redo" title="Redo" class="button" src="icons/edit-redo.svg" onclick="buttonClick()" style="margin-left: 122px; margin-top: 7px;">
-        <img id="delet" title="Delet" class="button" src="icons/trash.svg" onclick="buttonClick()" style="margin-left: 151px; margin-top: 7px;">
+        <img id="delete" title="Delete" class="button" src="icons/trash.svg" onclick="buttonClick()" style="margin-left: 151px; margin-top: 7px;">
 
         <img id="cut" title="Cut" class="button" src="icons/edit-cut.svg" onclick="buttonClick()" style="margin-left: 93px; margin-top: 31px;">
         <img id="copy" title="Copy" class="button" src="icons/edit-copy.svg" onclick="buttonClick()" style="margin-left: 122px; margin-top: 31px;">
@@ -70,22 +70,26 @@
     <div id="divEdit" hidden="true">
         <div class="editRectangle">
             <p class="textButton" onclick="drawPolygon();">Draw</p>
-            <div class="radioButton" >
+            <div class="radioButtons" >
+              <div class="openPoligon">
                 <input id="openPolygon" type="radio" name="typePolygon">
-                <label for="openPolygon" class="text" style="cursor: pointer; font-size: 12px; position: relative;">Open Polygon</label>
+                <label for="openPolygon" class="text" style="cursor: pointer; font-size: 12px; position: relative;">Open</label>
+              </div>
+              <div class="closedPolygon">
                 <input id="closedPolygon" type="radio" name="typePolygon" checked>
-                <label for="closedPolygon" class="text" style="cursor: pointer; font-size: 12px; position: relative;">Closed Polygon</label>
+                <label for="closedPolygon" class="text" style="cursor: pointer; font-size: 12px; position: relative;">Closed</label>
+              </div>
 
             </div>
 
         </div>
     </div>
-    
+
     <div id="divCanvas">
         <canvas id='canvas' class="canvas" width="400px" height="400px" ondrop="drop_handler(event);" ondragover="dragover_handler(event);"></canvas>
         <svg id="svg" class="canvas" width="400px" height="400px" style="z-index: 0;" ondrop="drop_handler(event);" ondragover="dragover_handler(event);"></svg>
     </div>
-    
+
 
 </body>
 
