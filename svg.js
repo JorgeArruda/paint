@@ -1,4 +1,4 @@
-function svgAresta(id, x1, y1, x2, y2) {
+function svgAresta(id, x1, y1, x2, y2, color=undefined) {
     if (typeof (id) != 'string')
         return;
     var line = document.createElementNS("http://www.w3.org/2000/svg", "line");
@@ -7,13 +7,17 @@ function svgAresta(id, x1, y1, x2, y2) {
     line.setAttribute("y1", y1);
     line.setAttribute("x2", x2);
     line.setAttribute("y2", y2);
-    line.setAttribute("stroke", "#000000");
+    if (color != undefined){
+        line.setAttribute("stroke", color);  
+    }else{
+        line.setAttribute("stroke", data.color);  
+    }
     line.setAttribute("stroke-width", 2);
     line.setAttribute("onclick", "click(evt);");
     return line;
 }
 
-function svgClosedPolygon(id, vertices) {
+function svgClosedPolygon(id, vertices, color=undefined) {
     console.log("svgClosedPolygon(id, vertices)", id, vertices);
     if (typeof (id) != 'string')
         return;
@@ -27,17 +31,22 @@ function svgClosedPolygon(id, vertices) {
     polygon.setAttribute("points", vertex);
 
     // Borda
-    polygon.setAttribute("fill", data.color);
+    if (color != undefined){
+        polygon.setAttribute("fill", color);
+        polygon.setAttribute("stroke", color);        
+    }else{
+        polygon.setAttribute("fill", data.color);
+        polygon.setAttribute("stroke", data.color);        
+    }
     polygon.setAttribute("fill-opacity", "1");
     // Preenchimento
-    polygon.setAttribute("stroke", data.color);
     polygon.setAttribute("stroke-opacity", "1");
 
     polygon.setAttribute("onclick", "click(evt);");
     return polygon;
 }
 
-function svgOpenPolygon(id, vertices) {
+function svgOpenPolygon(id, vertices, color=undefined) {
     console.log("svgOpenPolygon(id, vertices)", id, vertices);
     if (typeof (id) != 'string')
         return;
@@ -54,7 +63,12 @@ function svgOpenPolygon(id, vertices) {
     polygon.setAttribute("fill", "none");
     //polygon.setAttribute("fill-opacity", "1");
     // Preenchimento
-    polygon.setAttribute("stroke", data.color);
+    
+    if (color != undefined){
+        polygon.setAttribute("stroke", color);      
+    }else{
+        polygon.setAttribute("stroke", data.color);       
+    }
     polygon.setAttribute("stroke-opacity", "1");
 
     polygon.setAttribute("onclick", "click(evt);");
@@ -108,20 +122,3 @@ function createVertex(id) {
     return vertice;
 }
 
-function drawPolygon() {
-    if (mouse.vertice.length < 3)
-        return;
-    if (document.getElementById("openPolygon").checked) 
-        data.drawing = "openPolygon";
-    else
-        data.drawing = "closedPolygon";
-    data.anim.push(createDrawing(data.drawing, mouse.vertice, undefined));
-
-    data.anim[data.anim.length - 1].svg = createPolygon(data.anim[data.anim.length - 1]);
-    data.anim[data.anim.length - 1].numVertice = mouse.vertice.length;
-
-    if (data.anim[data.anim.length - 1].svg != undefined)
-        document.getElementById("svg").appendChild(data.anim[data.anim.length - 1].svg);
-
-    mouse.vertice = [];
-}

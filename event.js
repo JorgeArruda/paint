@@ -1,20 +1,18 @@
 function setEvent() {
+    // Canvas mouse events
     data.svg.onmousemove = data.canvas.onmousemove = function (e) {
-        if (mouse.move) {
-            console.log("canvas.onmousemove()", mouse.idVertice);
-        }
         if (mouse.select)
             updateSelectAnimation(e.pageX - (window.innerWidth / 2 - data.canvas.width / 2), e.pageY - 71);
     };
     data.svg.onclick = data.canvas.onclick = function (e) {
-        console.log("canvas.onclick()", mouse.vertice);
-        if (data.drawing != undefined && data.drawing != "edit" && data.drawing != "select") {
+        if (data.drawing != undefined && data.drawing != "edit" && data.drawing != "select"){
+            if (mouse.vertice.length == 0)
+                removeVertices();
             drawVertice(e.pageX - (window.innerWidth / 2 - data.canvas.width / 2), e.pageY - 71);
         }
         updateSelectAnimation(e.pageX - (window.innerWidth / 2 - data.canvas.width / 2), e.pageY - 71);
     };
     data.svg.onmousedown = data.canvas.onmousedown = function (e) {
-        console.log("onmousedown()");
         if (data.drawing == "select" && !mouse.select) {
             removeVertices();
             removeSelects();
@@ -22,13 +20,13 @@ function setEvent() {
         }
     };
     data.svg.onmouseup = data.canvas.onmouseup = function (e) {
-        console.log('onmouseup');
         mouse.select = false;
     };
     data.svg.onmouseout = data.canvas.onmouseout = function (e) {
-        console.log('onmouseout');
         mouse.select = false;
     };
+
+    // Buttons events
     var buttonDraws = document.getElementsByClassName("drawing");
     for (var index = 0; index < buttonDraws.length; index++) {
         buttonDraws[index].onclick = function (ev) {

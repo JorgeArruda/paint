@@ -26,6 +26,7 @@ var mouse = {
  */
 function createDrawing(operation, vertice, svg) {
     var drawing = {
+        color: data.color,
         type: operation,
         vertices: vertice, //[<img>, posX, posY]
         svg: svg,
