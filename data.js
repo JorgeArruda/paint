@@ -42,8 +42,13 @@ function createDrawing(operation, vertice, svg) {
  */
 function findVertice(idVertice) { // type _ anim.lenght-1 _ vertice.lenght
     var ret = [];
-    if (data.anim[Number(idVertice.split("_")[1])] == undefined)
+    if (data.anim[Number(idVertice.split("_")[1])] == undefined){
+        for (let index = 0; index < mouse.vertice.length; index++) {
+            if (mouse.vertice[index][0].id == idVertice)
+                return mouse.vertice[index];
+        }
         return;
+    }
     ret.push(data.anim[Number(idVertice.split("_")[1])]);
     ret.push(Number(idVertice.split("_")[1]));
     ret.push(Number(idVertice.split("_")[2])-1);

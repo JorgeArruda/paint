@@ -13,19 +13,24 @@ function dragstart_handler(ev) {
 
 function dragover_handler(ev) {
 
-    var vertice = document.getElementById(mouse.idVertice);
-    vertice.style.left = (ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2)) + "px";
-    vertice.style.top = (ev.pageY - 71) + "px";
+    if (mouse.vertice.length > 0) {
+        var vertex = findVertice(mouse.idVertice);
+        vertex[0].style.left = (ev.pageX - 5 - (window.innerWidth / 2 - data.canvas.width / 2)) + "px";
+        vertex[0].style.top = (ev.pageY - 5 - 71) + "px";
+        vertex[1] = ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2);
+        vertex[2] = ev.pageY - 71;
+    }else{
+    
+        var anim = findVertice(mouse.idVertice);
+        if (anim != undefined) {
+            anim[0].vertices[anim[2]][0].parentNode.removeChild(anim[0].vertices[anim[2]][0]);
+            anim[0].vertices[anim[2]] = updateVertex(anim[0].vertices[anim[2]], ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2), ev.pageY - 71);
+            document.getElementById("divCanvas").appendChild(anim[0].vertices[anim[2]][0]);
 
-    var anim = findVertice(mouse.idVertice);
-    if (anim != undefined) {
-        anim[0].vertices[anim[2]][0].parentNode.removeChild(anim[0].vertices[anim[2]][0]);
-        updateVertex(anim[0].vertices[anim[2]], ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2), ev.pageY - 71);
-        document.getElementById("divCanvas").appendChild(anim[0].vertices[anim[2]][0]);
-
-        anim[0].svg.parentNode.removeChild(anim[0].svg);
-        anim[0].svg = updatePolygon(anim[0], String(anim[1] + 1));
-        document.getElementById("svg").appendChild(anim[0].svg);
+            anim[0].svg.parentNode.removeChild(anim[0].svg);
+            anim[0].svg = updatePolygon(anim[0], String(anim[1] + 1));
+            document.getElementById("svg").appendChild(anim[0].svg);
+        }
     }
 
     updateSelectAnimation(ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2), ev.pageY - 71);
@@ -38,18 +43,22 @@ function dragover_handler(ev) {
 function drop_handler(ev) {
     ev.preventDefault();
 
-    var vertice = document.getElementById(mouse.idVertice);
-    vertice.style.left = (ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2)) + "px";
-    vertice.style.top = (ev.pageY - 71) + "px";
+    if (mouse.vertice.length > 0) {
+        var vertex = findVertice(mouse.idVertice);
+        vertex[0].style.left = (ev.pageX - 5 - (window.innerWidth / 2 - data.canvas.width / 2)) + "px";
+        vertex[0].style.top = (ev.pageY - 5 - 71) + "px";
+        vertex[1] = ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2);
+        vertex[2] = ev.pageY - 71;
+    }else{
 
-    var anim = findVertice(mouse.idVertice);
-    if (anim != undefined) {
-        updateVertex(anim[0].vertices[anim[2]], ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2), ev.pageY - 71);
-        anim[0].svg.parentNode.removeChild(anim[0].svg);
-        anim[0].svg = updatePolygon(anim[0], String(anim[1]));
-        document.getElementById("svg").appendChild(anim[0].svg);
+        var anim = findVertice(mouse.idVertice);
+        if (anim != undefined) {
+            anim[0].vertices[anim[2]] = updateVertex(anim[0].vertices[anim[2]], ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2), ev.pageY - 71);
+            anim[0].svg.parentNode.removeChild(anim[0].svg);
+            anim[0].svg = updatePolygon(anim[0], String(anim[1]));
+            document.getElementById("svg").appendChild(anim[0].svg);
+        }
     }
-
     mouse.move = false;
     
     updateSelectAnimation(ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2), ev.pageY - 71);
@@ -77,7 +86,7 @@ function updateSelectAnimation(posX, posY) {
 
         console.log(" 2 Select ", mouse.vertice[index][0].id, " - Move to", posX, posY);
 
-        updateVertex(mouse.vertice[index], posX, posY);
+        mouse.vertice[index] = updateVertex(mouse.vertice[index], posX, posY);
         document.getElementById("divCanvas").appendChild(mouse.vertice[index][0]);
 
         var drawing = createDrawing(data.drawing, mouse.vertice, mouse.polygon[mouse.polygon.length - 1]);
@@ -100,11 +109,11 @@ function startSelectAnimation(posX, posY) {
 
     mouse.vertice.push([createVertex("select_" + data.anim.length + "_" + "1"), 0, 0]);
     console.log("select1 - Create to", posX, posY);
-    updateVertex(mouse.vertice[mouse.vertice.length - 1], posX, posY);
+    mouse.vertice[mouse.vertice.length - 1] = updateVertex(mouse.vertice[mouse.vertice.length - 1], posX, posY);
 
     mouse.vertice.push([createVertex("select_" + data.anim.length + "_" + "2"), 0, 0]);
     console.log("select2 - Create to", posX, posY);
-    updateVertex(mouse.vertice[mouse.vertice.length - 1], posX, posY);
+    mouse.vertice[mouse.vertice.length - 1] = updateVertex(mouse.vertice[mouse.vertice.length - 1], posX, posY);
 
     var element = document.getElementById("divCanvas");
     //element.appendChild(mouse.vertice[mouse.vertice.length - 2][0]);

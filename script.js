@@ -51,6 +51,8 @@ function updateVertex(vertex, posX, posY) {
     vertex[0].style.top = (posY - 5) + "px";
     vertex[1] = posX;
     vertex[2] = posY;
+
+    return vertex;
 }
 
 function drawVertice(posX, posY) {
