@@ -50,7 +50,6 @@ function setEvent() {
                 data.svg.style.zIndex = "0";
                 if (ev.target.id == "polygon") {
                     console.log("ev.target.id == 'polygon'");
-                    //document.getElementById("divEdit").style.dispray = 'inline-flex';
                     document.getElementById("divEdit").style.opacity = 0;
                     document.getElementById("divEdit").style.marginLeft = '-200px';
                 }
@@ -60,7 +59,6 @@ function setEvent() {
                 data.svg.style.zIndex = "1";
                 if (ev.target.id == "polygon") {
                     console.log("ev.target.id == 'polygon'");
-                    //document.getElementById("divEdit").style.dispray = 'inline-flex';
                     document.getElementById("divEdit").style.opacity = 1;
                     document.getElementById("divEdit").style.marginLeft = '0px';
                 } else {
@@ -70,6 +68,7 @@ function setEvent() {
                     document.getElementById("divEdit").style.marginLeft = '-200px';
                 }
             }
+            
             removeVertices();
             removeSelects();
             mouse.vertice = [];

@@ -30,7 +30,8 @@ function createDrawing(operation, vertice, svg) {
         type: operation,
         vertices: vertice, //[<img>, posX, posY]
         svg: svg,
-        numVertice: getNumVertice(operation)
+        numVertice: getNumVertice(operation),
+        show: true
     };
 
     return drawing;
