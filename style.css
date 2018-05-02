@@ -160,6 +160,24 @@ body {
     visibility: 0.2;
 }
 
+.transform {
+    cursor: pointer;
+    z-index: 6;
+    width: 19px;
+    height: 19px;
+    position: absolute;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.transform:hover {
+    transform: scale(1.2);
+    box-shadow: rgb(204, 204, 204) 0px 0px 10px;
+    background: rgb(97, 224, 214);
+    visibility: 0.2;
+}
+
 .vertice {
     position: absolute;
     left: 100px;
