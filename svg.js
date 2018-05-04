@@ -1,4 +1,4 @@
-function svgAresta(id, x1, y1, x2, y2, color=undefined) {
+function svgAresta(id, x1, y1, x2, y2, color = undefined) {
     if (typeof (id) != 'string')
         return;
     var line = document.createElementNS("http://www.w3.org/2000/svg", "line");
@@ -7,36 +7,36 @@ function svgAresta(id, x1, y1, x2, y2, color=undefined) {
     line.setAttribute("y1", y1);
     line.setAttribute("x2", x2);
     line.setAttribute("y2", y2);
-    if (color != undefined){
-        line.setAttribute("stroke", color);  
-    }else{
-        line.setAttribute("stroke", data.color);  
+    if (color != undefined) {
+        line.setAttribute("stroke", color);
+    } else {
+        line.setAttribute("stroke", data.color);
     }
     line.setAttribute("stroke-width", 2);
     line.setAttribute("onclick", "click(evt);");
     return line;
 }
 
-function svgClosedPolygon(id, vertices, color=undefined) {
+function svgClosedPolygon(id, vertices, color = undefined) {
     console.log("svgClosedPolygon(id, vertices)", id, vertices);
     if (typeof (id) != 'string')
         return;
     var polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
     polygon.setAttribute("id", id);
     var vertex = "";
-    for (var index = 0; index < vertices.length; index++) 
+    for (var index = 0; index < vertices.length; index++)
         vertex = vertex + (vertices[index][0]) + "," + (vertices[index][1]) + "  ";
-    
+
 
     polygon.setAttribute("points", vertex);
 
     // Borda
-    if (color != undefined){
+    if (color != undefined) {
         polygon.setAttribute("fill", color);
-        polygon.setAttribute("stroke", color);        
-    }else{
+        polygon.setAttribute("stroke", color);
+    } else {
         polygon.setAttribute("fill", data.color);
-        polygon.setAttribute("stroke", data.color);        
+        polygon.setAttribute("stroke", data.color);
     }
     polygon.setAttribute("fill-opacity", "1");
     // Preenchimento
@@ -46,16 +46,16 @@ function svgClosedPolygon(id, vertices, color=undefined) {
     return polygon;
 }
 
-function svgOpenPolygon(id, vertices, color=undefined) {
+function svgOpenPolygon(id, vertices, color = undefined) {
     console.log("svgOpenPolygon(id, vertices)", id, vertices);
     if (typeof (id) != 'string')
         return;
     var polygon = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
     polygon.setAttribute("id", id);
     var vertex = "";
-    for (var index = 0; index < vertices.length; index++) 
+    for (var index = 0; index < vertices.length; index++)
         vertex = vertex + (vertices[index][0]) + "," + (vertices[index][1]) + "  ";
-    
+
 
     polygon.setAttribute("points", vertex);
 
@@ -63,11 +63,11 @@ function svgOpenPolygon(id, vertices, color=undefined) {
     polygon.setAttribute("fill", "none");
     //polygon.setAttribute("fill-opacity", "1");
     // Preenchimento
-    
-    if (color != undefined){
-        polygon.setAttribute("stroke", color);      
-    }else{
-        polygon.setAttribute("stroke", data.color);       
+
+    if (color != undefined) {
+        polygon.setAttribute("stroke", color);
+    } else {
+        polygon.setAttribute("stroke", data.color);
     }
     polygon.setAttribute("stroke-opacity", "1");
 
@@ -99,14 +99,42 @@ function svgSelect(id, vertices) {
     return polygon;
 }
 
+function createControl(id, posX, posY) {
+    if (typeof (id) != 'string')
+        return;
+    var transformControl = document.createElement('img');
+    transformControl.id = id;
+    transformControl.src = "icons/control-translation.svg";
+    transformControl.draggable = "true";
+    transformControl.ondragstart = dragstart_handler;
+    transformControl.ondragend = dragEnd;
+    transformControl.className = "transformControl";
+
+    transformControl.style.left = (posX - 15) + "px";
+    transformControl.style.top = (posY - 15) + "px";
+    return transformControl;
+}
+
 function click(evt) {
     console.log("clickPolygon()", evt.target.id);
-    if (data.drawing != "edit")
-        return;
-    var anim = findPolygon(evt.target.id);
-    
-    removeVertices();
-    drawAnim(anim[0]);
+    if (data.drawing == "translate" || data.drawing == "edit") {
+        var anim = findPolygon(evt.target.id);
+        removeVertices();
+        removeTransform();
+        drawAnim(anim[0]);
+
+        if (data.drawing == "translate") {
+            var vertex = document.getElementsByClassName("vertice");
+            if (vertex.length > 0 && mouse.vertice.length == 0) {
+                var anim = findVertice(vertex.item(0).id)[0];
+                var positionCenter = calcCenterVertex(anim.vertices);
+                console.log("ok", positionCenter);
+                var vertexControl = createControl("control_translate", positionCenter[0], positionCenter[1]);
+                document.getElementById("divCanvas").appendChild(vertexControl);
+            }
+            removeVertices();
+        }
+    }
 }
 
 function createVertex(id) {
@@ -121,4 +149,3 @@ function createVertex(id) {
     vertice.className = "vertice";
     return vertice;
 }
-

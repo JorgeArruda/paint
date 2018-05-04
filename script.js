@@ -112,7 +112,17 @@ function removeVertices() {
 }
 
 function removeSelects() {
-    var vertices = document.getElementsByTagName("polygon");
+    var selects = document.getElementsByTagName("polygon");
+    if (selects.length <= 0)
+        return;
+    for (var index = selects.length - 1; index >= 0; index--) {
+        if (selects[index].id.substring(0, 6) == "select") {
+            console.log("Delete", selects[index]);
+            selects[index].parentNode.removeChild(selects[index]);
+        }
+    }
+
+    var vertices = document.getElementsByClassName("vertice");
     if (vertices.length <= 0)
         return;
     for (var index = vertices.length - 1; index >= 0; index--) {
@@ -121,6 +131,12 @@ function removeSelects() {
             vertices[index].parentNode.removeChild(vertices[index]);
         }
     }
+}
+
+function removeTransform() {
+    var vertexControl = document.getElementById("control_translate");
+    if (vertexControl)
+        vertexControl.parentNode.removeChild(vertexControl);
 }
 
 function getNumVertice(type) {
@@ -153,3 +169,18 @@ function drawAnim(anim) {
     }
 }
 
+function calcCenterVertex(vertices, returnVertices = false){
+    if (vertices == undefined || vertices.length == 0)
+        return;
+    var minX, minY, maxX, maxY;
+    minX = maxX = vertices[0][1];
+    minY = maxY = vertices[0][2];
+    for (var index = 1; index < vertices.length; index++) {
+        minX = vertices[index][1] < minX ? vertices[index][1] : minX;
+        maxX = vertices[index][1] > maxX ? vertices[index][1] : maxX;
+        minY = vertices[index][2] < minY ? vertices[index][2] : minY;
+        maxY = vertices[index][2] > maxY ? vertices[index][2] : maxY;
+    }
+
+    return !returnVertices ? [(maxX+minX)/2, (maxY+minY)/2] : [[(maxX+minX)/2, (maxY+minY)/2],[minX, minY],[maxX, maxY]];
+}

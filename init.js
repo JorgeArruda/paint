@@ -19,3 +19,15 @@ function buttonDelete(ev) {
     removeSelects();
     mouse.vertice = [];
 }
+
+function transform(ev) {
+    focusButton(ev);
+    removeSelects();
+
+    if (data.drawing == ev.target.id) {
+        data.drawing = undefined;
+    } else {
+        data.drawing = ev.target.id;
+    }
+}
+

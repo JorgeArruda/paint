@@ -3,6 +3,7 @@ var data = {
     context: undefined,
     svg: undefined,
     drawing: undefined,
+    transform: undefined,
     color: undefined,
     states: [],
     anim: []  // createDrawing()

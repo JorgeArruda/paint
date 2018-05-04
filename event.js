@@ -5,7 +5,7 @@ function setEvent() {
             updateSelectAnimation(e.pageX - (window.innerWidth / 2 - data.canvas.width / 2), e.pageY - 71);
     };
     data.svg.onclick = data.canvas.onclick = function (e) {
-        if (data.drawing != undefined && data.drawing != "edit" && data.drawing != "select"){
+        if (data.drawing != undefined && data.drawing != "edit" && data.drawing != "select" && data.drawing != "translate" && data.drawing != "rotate" && data.drawing != "shear" && data.drawing != "scale"){
             if (mouse.vertice.length == 0)
                 removeVertices();
             drawVertice(e.pageX - (window.innerWidth / 2 - data.canvas.width / 2), e.pageY - 71);
@@ -30,19 +30,7 @@ function setEvent() {
     var buttonDraws = document.getElementsByClassName("drawing");
     for (var index = 0; index < buttonDraws.length; index++) {
         buttonDraws[index].onclick = function (ev) {
-            var buttonDraw = document.getElementsByClassName("drawing");
-            console.log("drawingClick", ev.target.id);
-            if (ev.target.style.boxShadow == "rgb(204, 204, 204) 0px 0px 10px") {
-                ev.target.style.boxShadow = "none";
-            } else {
-                ev.target.style.boxShadow = "rgb(204, 204, 204) 0px 0px 10px";
-            }
-
-            for (var index = 0; index < buttonDraw.length; index++) {
-                if (ev.target.id != buttonDraw[index].id) {
-                    buttonDraw[index].style.boxShadow = "none";
-                }
-            }
+            focusButton(ev);  //Set border in button, remove border of other buttons
 
             if (data.drawing == ev.target.id) {
                 data.drawing = undefined;
@@ -72,6 +60,33 @@ function setEvent() {
             removeVertices();
             removeSelects();
             mouse.vertice = [];
+        }
+    }
+}
+
+
+function focusButton(ev) {
+    removeVertices();
+    removeSelects();
+    removeTransform();
+    console.log("click drawing OR transform", ev.target.id);
+    if (ev.target.style.boxShadow == "rgb(204, 204, 204) 0px 0px 10px") {
+        ev.target.style.boxShadow = "none";
+    } else {
+        ev.target.style.boxShadow = "rgb(204, 204, 204) 0px 0px 10px";
+    }
+
+    var buttonDraw = document.getElementsByClassName("drawing");
+    for (var index = 0; index < buttonDraw.length; index++) {
+        if (ev.target.id != buttonDraw[index].id) {
+            buttonDraw[index].style.boxShadow = "none";
+        }
+    }
+
+    var buttonTransform = document.getElementsByClassName("transform");
+    for (var index = 0; index < buttonTransform.length; index++) {
+        if (ev.target.id != buttonTransform[index].id) {
+            buttonTransform[index].style.boxShadow = "none";
         }
     }
 }

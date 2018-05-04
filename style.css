@@ -131,15 +131,16 @@ body {
     -webkit-border-radius: 5px;
     border-radius: 5px;
 }
-
-.button:active {
-    background: rgb(49, 211, 197);
-    box-shadow: rgb(49, 211, 197) 0px 0px 14px;
-}
-
 .button:hover {
     transform: scale(1.2);
+    --background: rgb(97, 224, 214);
     box-shadow: rgb(204, 204, 204) 0px 0px 10px;
+}
+
+.button:active {
+    background: rgba(39, 37, 36, 0.78);
+    box-shadow: rgb(49, 211, 197) 0px 0px 14px;
+    transform: var(--background);
 }
 
 .drawing {
@@ -174,8 +175,14 @@ body {
 .transform:hover {
     transform: scale(1.2);
     box-shadow: rgb(204, 204, 204) 0px 0px 10px;
-    background: rgb(97, 224, 214);
+    --background: rgb(97, 224, 214);
     visibility: 0.2;
+}
+
+.transform:active {
+    background: rgba(39, 37, 36, 0.78);
+    box-shadow: rgb(94, 221, 211) 0px 0px 10px;
+    transform: var(--background);
 }
 
 .vertice {
@@ -189,6 +196,22 @@ body {
 }
 
 .vertice:hover {
+    transform: scale(1.2);
+    opacity: 1;
+    cursor: move;
+}
+
+.transformControl {
+    position: absolute;
+    left: 100px;
+    top: 100px;
+    z-index: 3;
+    width: 30px;
+    height: 30px;
+    opacity: 0.8;
+}
+
+.transformControl:hover {
     transform: scale(1.2);
     opacity: 1;
     cursor: move;
