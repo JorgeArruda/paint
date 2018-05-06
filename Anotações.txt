@@ -5,7 +5,7 @@ mouse.polygon   Temp
 
 data.anim   Cons
     - type:    point | line | triangle | rectangle | star | polygon
-    - numVertice: 1  |   2  |    3     |     4     |   5  |    100
+    - numVertice: 1  |   2  |    3     |     4     |   5  |    >2
     - vertices: [ <img> , posX, posY]
     - svg : <svg> # Desenho
 

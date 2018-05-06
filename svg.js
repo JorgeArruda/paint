@@ -8,12 +8,12 @@ function svgAresta(id, x1, y1, x2, y2, color = undefined) {
     line.setAttribute("x2", x2);
     line.setAttribute("y2", y2);
     if (color != undefined) {
-        line.setAttribute("stroke", color);
+        line.setAttribute("stroke", color != undefined ? color : data.color);
     } else {
         line.setAttribute("stroke", data.color);
     }
     line.setAttribute("stroke-width", 2);
-    line.setAttribute("onclick", "click(evt);");
+    line.setAttribute("onclick", "click_svg(evt);");
     return line;
 }
 
@@ -42,7 +42,7 @@ function svgClosedPolygon(id, vertices, color = undefined) {
     // Preenchimento
     polygon.setAttribute("stroke-opacity", "1");
 
-    polygon.setAttribute("onclick", "click(evt);");
+    polygon.setAttribute("onclick", "click_svg(evt);");
     return polygon;
 }
 
@@ -55,15 +55,8 @@ function svgOpenPolygon(id, vertices, color = undefined) {
     var vertex = "";
     for (var index = 0; index < vertices.length; index++)
         vertex = vertex + (vertices[index][0]) + "," + (vertices[index][1]) + "  ";
-
-
     polygon.setAttribute("points", vertex);
-
-    // Borda
     polygon.setAttribute("fill", "none");
-    //polygon.setAttribute("fill-opacity", "1");
-    // Preenchimento
-
     if (color != undefined) {
         polygon.setAttribute("stroke", color);
     } else {
@@ -71,7 +64,7 @@ function svgOpenPolygon(id, vertices, color = undefined) {
     }
     polygon.setAttribute("stroke-opacity", "1");
 
-    polygon.setAttribute("onclick", "click(evt);");
+    polygon.setAttribute("onclick", "click_svg(evt);");
     return polygon;
 }
 
@@ -95,27 +88,11 @@ function svgSelect(id, vertices) {
     polygon.setAttribute("stroke", "black");
     polygon.setAttribute("stroke-opacity", "1");
 
-    polygon.setAttribute("onclick", "click(evt);");
+    polygon.setAttribute("onclick", "click_svg(evt);");
     return polygon;
 }
 
-function createControl(id, posX, posY) {
-    if (typeof (id) != 'string')
-        return;
-    var transformControl = document.createElement('img');
-    transformControl.id = id;
-    transformControl.src = "icons/control-translation.svg";
-    transformControl.draggable = "true";
-    transformControl.ondragstart = dragstart_handler;
-    transformControl.ondragend = dragEnd;
-    transformControl.className = "transformControl";
-
-    transformControl.style.left = (posX - 15) + "px";
-    transformControl.style.top = (posY - 15) + "px";
-    return transformControl;
-}
-
-function click(evt) {
+function click_svg(evt) {
     console.log("clickPolygon()", evt.target.id);
     if (data.drawing == "translate" || data.drawing == "edit") {
         var anim = findPolygon(evt.target.id);
@@ -129,7 +106,7 @@ function click(evt) {
                 var anim = findVertice(vertex.item(0).id)[0];
                 var positionCenter = calcCenterVertex(anim.vertices);
                 console.log("ok", positionCenter);
-                var vertexControl = createControl("control_translate", positionCenter[0], positionCenter[1]);
+                var vertexControl = createVertexControl("control_translate", positionCenter[0], positionCenter[1]);
                 document.getElementById("divCanvas").appendChild(vertexControl);
             }
             removeVertices();
@@ -148,4 +125,20 @@ function createVertex(id) {
     vertice.ondragend = dragEnd;
     vertice.className = "vertice";
     return vertice;
+}
+
+function createVertexControl(id, posX, posY) {
+    if (typeof (id) != 'string')
+        return;
+    var transformControl = document.createElement('img');
+    transformControl.id = id;
+    transformControl.src = "icons/control-translation.svg";
+    transformControl.draggable = "true";
+    transformControl.ondragstart = dragstart_handler;
+    transformControl.ondragend = dragEnd;
+    transformControl.className = "transformControl";
+
+    transformControl.style.left = (posX - 15) + "px";
+    transformControl.style.top = (posY - 15) + "px";
+    return transformControl;
 }

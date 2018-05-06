@@ -70,3 +70,18 @@ function findPolygon(idPolygon) {
         return ret;
     }
 }
+
+function getNumVertice(type) {
+    if (type == "point")
+        return 1;
+    if (type == "line")
+        return 2;
+    if (type == "triangle")
+        return 3;
+    if (type == "rectangle")
+        return 4;
+    if (type == "star")
+        return 5;
+    if (type == "openPolygon" || type == "openPolygon")
+        return mouse.vertice.length;
+}
