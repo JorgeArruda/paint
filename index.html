@@ -48,7 +48,8 @@
         <img id="triangle" title="Draw Triangle" class="drawing" src="icons/draw-triangle.svg" onclick="buttons_drawing(event)" style="margin-left: 275px; margin-top: 7px;">
         <p class="text" style="margin-left: 299px; margin-top: 2px;">Triangle</p>
 
-        <img id="rectangle" title="Draw Rectangle" class="drawing" src="icons/draw-rectangle.svg" onclick="buttons_drawing(event)" style="margin-left: 275px; margin-top: 31px;">
+        <img id="rectangle" title="Draw Rectangle" class="drawing" src="icons/draw-rectangle.svg" onclick="buttons_drawing(event)"
+            style="margin-left: 275px; margin-top: 31px;">
         <p class="text" style="margin-left: 299px; margin-top:  26px;">Rectangle</p>
 
 
@@ -71,26 +72,38 @@
 
         <img src="image/limit.png" width="2px" height="50" style="position: absolute; margin-left: 585px; margin-top: 5px;">
 
-        <img id="translate" title="Translate - Move" class="transform" src="icons/transform-translation.svg" onclick="buttons_transform(event)" style="margin-left: 600px; margin-top: 7px;">
+        <img id="translate" title="Translate - Move" class="transform" src="icons/transform-translation.svg" onclick="buttons_transform(event)"
+            style="margin-left: 600px; margin-top: 7px;">
         <img id="rotate" title="Rotate" class="transform" src="icons/transform-rotate.svg" onclick="buttons_transform(event)" style="margin-left: 629px; margin-top: 7px;">
-        
+
         <img id="shear" title="Shear" class="transform" src="icons/transform-shear.svg" onclick="buttons_transform(event)" style="margin-left: 600px; margin-top: 31px;">
         <img id="scale" title="Scale" class="transform" src="icons/transform-scale.svg" onclick="buttons_transform(event)" style="margin-left: 629px; margin-top: 31px;">
-        
+
     </div>
 
     <div id="divEdit" hidden="true">
-        <div id="edit_poligon" class="edit">
+        <div id="div_polygon" class="edit">
             <p class="textButton" onclick="drawPolygon();">Draw</p>
-            <div class="radioButtons" >
-              <div class="openPoligon">
-                <input id="openPolygon" type="radio" name="typePolygon">
-                <label for="openPolygon" class="text" style="cursor: pointer; font-size: 12px; position: relative;">Open</label>
-              </div>
-              <div class="closedPolygon">
-                <input id="closedPolygon" type="radio" name="typePolygon" checked>
-                <label for="closedPolygon" class="text" style="cursor: pointer; font-size: 12px; position: relative;">Closed</label>
-              </div>
+            <div class="radioButtons">
+                <div>
+                    <input id="openPolygon" type="radio" name="typePolygon">
+                    <label for="openPolygon" class="text" style="cursor: pointer; font-size: 12px; position: relative;">Open</label>
+                </div>
+                <div>
+                    <input id="closedPolygon" type="radio" name="typePolygon" checked>
+                    <label for="closedPolygon" class="text" style="cursor: pointer; font-size: 12px; position: relative;">Closed</label>
+                </div>
+            </div>
+        </div>
+        <div id="div_translate" class="edit">
+            <p class="textButton" onclick="drawPolygon();">Transform</p>
+            <div style="display: block; align-items: center;">
+                <p class="text" style="margin-left: 12px; position: relative; display: inline; font-size: 15px;">X :</p>
+                <input id="input_pos_x" class="inNumber" style="text-align: center; margin-left: 7px; display: inline; width: 50px; height: 15px; box-shadow: rgb(41, 39, 39) 2px 2px 5px;" type="number" value=400 min="-9000" max="9000" step="1">
+            </div>
+            <div style="display: block; align-items: center;">
+                <p class="text" style="margin-left: 12px; position: relative; display: inline; font-size: 15px;">Y :</p>
+                <input id="input_pos_y" class="inNumber" style="text-align: center; margin-left: 7px; display: inline; width: 50px; height: 15px; box-shadow: rgb(41, 39, 39) 2px 2px 5px;" type="number" value=400 min="-9000" max="9000" step="1">
             </div>
         </div>
     </div>
@@ -114,8 +127,6 @@
             document.getElementById("open").style.boxShadow = "rgb(204, 204, 204) 0px 0px 10px";
         }
     }
-
-    
 </script>
 
 </html>

@@ -19,7 +19,7 @@ function buttons_drawing(ev) {
         data.svg.style.zIndex = "0";
         if (ev.target.id == "polygon") {
             console.log("ev.target.id == 'polygon'");
-            divEdit(false, "edit_poligon");
+            divEdit(false, "div_polygon");
         }
     } else {
         data.drawing = ev.target.id;
@@ -27,10 +27,10 @@ function buttons_drawing(ev) {
         data.svg.style.zIndex = "1";
         if (ev.target.id == "polygon") {
             console.log("ev.target.id == 'polygon'");
-            divEdit(true, "edit_poligon");
+            divEdit(true, "div_polygon");
         } else {
             console.log("ev.target.id != 'polygon'");
-            divEdit(false, "edit_poligon");
+            divEdit(false, "div_polygon");
         }
     }
 
@@ -40,7 +40,8 @@ function buttons_drawing(ev) {
 }
 
 function divEdit(show, painel) {
-    if (show && painel == "edit_poligon") {
+    document.getElementById("div_polygon").style.display = document.getElementById("div_translate").style.display = 'none';
+    if (show && (painel == "div_polygon" || painel ==  "div_translate")) {
         document.getElementById(painel).style.display = 'block';
         document.getElementById("divEdit").style.opacity = 1;
         document.getElementById("divEdit").style.marginLeft = '0px';
@@ -57,8 +58,10 @@ function buttons_transform(ev) {
 
     if (data.drawing == ev.target.id) {
         data.drawing = undefined;
+        divEdit(false, "div_translate");
     } else {
         data.drawing = ev.target.id;
+        divEdit(true, "div_translate");
     }
 }
 
