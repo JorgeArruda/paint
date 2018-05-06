@@ -63,11 +63,11 @@
         <img src="image/limit.png" width="2px" height="50" style="position: absolute; margin-left: 470px; margin-top: 5px;">
 
         <img id="colorIcon" aria-hidden="true" src="icons/colors-luma.svg" style="width: 19px; height: 19px; z-index: 6; position: absolute; margin-left: 485px; margin-top: 7px;">
-        <input id="color" name="cor" type="color" onchange="data.color = document.getElementById('color').value;" style="cursor: pointer; width: 60px; height: 19px; z-index: 6; position: absolute; margin-left: 510px; margin-top: 7px;">
+        <input id="color" name="cor" type="color" onchange="data.color = document.getElementById('color').value;" style="cursor: pointer; width: 60px; height: 19px; z-index: 6; position: absolute; margin-left: 510px; margin-top: 7px; border: hidden; border-style: hidden; padding: 0px;">
 
-        <img id="edit" title="Edit" class="drawing" src="icons/edit.svg" style="margin-left: 485px; margin-top: 31px;">
+        <img id="edit" title="Edit" class="drawing" src="icons/edit.svg" onclick="buttons_drawing(event)" style="margin-left: 485px; margin-top: 31px;">
 
-        <img id="select" title="Select area" class="drawing" src="icons/select.svg" style="margin-left: 515px; margin-top: 31px;">
+        <img id="select" title="Select area" class="drawing" src="icons/select.svg" onclick="buttons_drawing(event)" style="margin-left: 515px; margin-top: 31px;">
 
 
         <img src="image/limit.png" width="2px" height="50" style="position: absolute; margin-left: 585px; margin-top: 5px;">
@@ -87,23 +87,25 @@
             <div class="radioButtons">
                 <div>
                     <input id="openPolygon" type="radio" name="typePolygon">
-                    <label for="openPolygon" class="text" style="cursor: pointer; font-size: 12px; position: relative;">Open</label>
+                    <label for="openPolygon" class="text" style="cursor: pointer; font-size: 14px; position: relative;">Open</label>
                 </div>
                 <div>
                     <input id="closedPolygon" type="radio" name="typePolygon" checked>
-                    <label for="closedPolygon" class="text" style="cursor: pointer; font-size: 12px; position: relative;">Closed</label>
+                    <label for="closedPolygon" class="text" style="cursor: pointer; font-size: 14px; position: relative;">Closed</label>
                 </div>
             </div>
         </div>
         <div id="div_translate" class="edit">
-            <p class="textButton" onclick="drawPolygon();">Transform</p>
-            <div style="display: block; align-items: center;">
-                <p class="text" style="margin-left: 12px; position: relative; display: inline; font-size: 15px;">X :</p>
-                <input id="input_pos_x" class="inNumber" style="text-align: center; margin-left: 7px; display: inline; width: 50px; height: 15px; box-shadow: rgb(41, 39, 39) 2px 2px 5px;" type="number" value=400 min="-9000" max="9000" step="1">
-            </div>
-            <div style="display: block; align-items: center;">
-                <p class="text" style="margin-left: 12px; position: relative; display: inline; font-size: 15px;">Y :</p>
-                <input id="input_pos_y" class="inNumber" style="text-align: center; margin-left: 7px; display: inline; width: 50px; height: 15px; box-shadow: rgb(41, 39, 39) 2px 2px 5px;" type="number" value=400 min="-9000" max="9000" step="1">
+            <p class="textButton" onclick="button_draw_translate(event);">Translate</p>
+            <div style="padding: 5px; padding-top: 15px; padding-bottom: 15px; background: rgba(63, 58, 55, 0.78); box-shadow: rgb(0, 0, 0) 2px 2px 5px; border: 1px solid #403a3a;">
+                <div style="display: block; align-items: center;">
+                    <p class="text" style="margin-left: 2px; position: relative; display: inline; font-size: 15px;">X :</p>
+                    <input id="input_pos_x" class="inNumber" type="number" value=0 min="-9000" max="9000" step="1">
+                </div>
+                <div style="margin-top: 10px; display: block; align-items: center;">
+                    <p class="text" style="margin-left: 2px; position: relative; display: inline; font-size: 15px;">Y :</p>
+                    <input id="input_pos_y" class="inNumber" type="number" value=0 min="-9000" max="9000" step="1">
+                </div>
             </div>
         </div>
     </div>

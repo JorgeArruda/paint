@@ -6,6 +6,7 @@ var data = {
     transform: undefined,
     color: undefined,
     states: [],
+    anim_focus: undefined,
     anim: []  // createDrawing()
 };
 

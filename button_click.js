@@ -7,12 +7,13 @@ function button_delete(ev) {
     }
     removeVertices();
     removeSelects();
+    data.anim_focus = undefined;
     mouse.vertice = [];
 }
 
 function buttons_drawing(ev) {
     focusButton(ev); //Set border in button, remove border of other buttons
-
+    data.anim_focus = undefined;
     if (data.drawing == ev.target.id) {
         data.drawing = undefined;
         data.canvas.style.zIndex = "1";
@@ -39,6 +40,35 @@ function buttons_drawing(ev) {
     mouse.vertice = [];
 }
 
+function buttons_transform(ev) {
+    focusButton(ev);
+    removeSelects();
+    data.anim_focus = undefined;
+    if (data.drawing == ev.target.id) {
+        data.drawing = undefined;
+        divEdit(false, "div_"+ev.target.id);
+    } else {
+        data.drawing = ev.target.id;
+        divEdit(true, "div_"+ev.target.id);
+    }
+}
+
+function button_draw_translate(ev){
+    var valor_x = Number(document.getElementById("input_pos_x").value);
+    var valor_y = Number(document.getElementById("input_pos_y").value);
+    if (data.anim_focus == undefined)
+        return;
+    for (var index = 0; index < data.anim_focus.vertices.length; index++) {
+        data.anim_focus.vertices[index][1] = data.anim_focus.vertices[index][1] + valor_x;
+        data.anim_focus.vertices[index][2] = data.anim_focus.vertices[index][2] + valor_y;
+        data.anim_focus.vertices[index][0].style.left = (data.anim_focus.vertices[index][1] - 5) + "px";
+        data.anim_focus.vertices[index][0].style.top = (data.anim_focus.vertices[index][2] - 5) + "px";
+    }
+    data.anim_focus.svg.parentNode.removeChild(data.anim_focus.svg);
+    data.anim_focus.svg = updatePolygon(data.anim_focus, data.anim_focus.svg.id.split("_")[1]);
+    document.getElementById("svg").appendChild(data.anim_focus.svg);
+}
+
 function divEdit(show, painel) {
     document.getElementById("div_polygon").style.display = document.getElementById("div_translate").style.display = 'none';
     if (show && (painel == "div_polygon" || painel ==  "div_translate")) {
@@ -46,22 +76,8 @@ function divEdit(show, painel) {
         document.getElementById("divEdit").style.opacity = 1;
         document.getElementById("divEdit").style.marginLeft = '0px';
     } else {
-        document.getElementById(painel).style.display = 'none';
         document.getElementById("divEdit").style.opacity = 0;
         document.getElementById("divEdit").style.marginLeft = '-200px';
-    }
-}
-
-function buttons_transform(ev) {
-    focusButton(ev);
-    removeSelects();
-
-    if (data.drawing == ev.target.id) {
-        data.drawing = undefined;
-        divEdit(false, "div_translate");
-    } else {
-        data.drawing = ev.target.id;
-        divEdit(true, "div_translate");
     }
 }
 

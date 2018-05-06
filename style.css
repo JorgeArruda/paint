@@ -51,6 +51,7 @@ body {
     border: 1px solid #403a3a;
     padding: 5px;
 }
+
 .radioButton:hover {
     box-shadow: rgb(0, 0, 0) 3px 3px 10px;
 }
@@ -87,6 +88,10 @@ body {
     text-align: center;
     color: white;
     position: absolute;
+    user-select: none;
+    -moz-user-select: none;
+    -ms-touch-select: none;
+    -webkit-user-select: none;
 }
 
 .textButton {
@@ -112,6 +117,10 @@ body {
     margin-right: 5%;
     border-radius: 5px;
     cursor: pointer;
+    user-select: none;
+    -moz-user-select: none;
+    -ms-touch-select: none;
+    -webkit-user-select: none;
 }
 
 .textButton:hover {
@@ -121,6 +130,7 @@ body {
 .textButton:active {
     background: rgba(39, 37, 36, 0.78);
     box-shadow: rgb(94, 221, 211) 3px 3px 10px;
+    color: rgb(94, 221, 211);
 }
 
 .button {
@@ -132,7 +142,12 @@ body {
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
+    user-select: none;
+    -moz-user-select: none;
+    -ms-touch-select: none;
+    -webkit-user-select: none;
 }
+
 .button:hover {
     transform: scale(1.2);
     --background: rgb(97, 224, 214);
@@ -154,6 +169,10 @@ body {
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
+    user-select: none;
+    -moz-user-select: none;
+    -ms-touch-select: none;
+    -webkit-user-select: none;
 }
 
 .drawing:hover {
@@ -237,4 +256,19 @@ polygon {
 polygon:hover {
     opacity: 0.8;
     box-shadow: rgb(204, 204, 204) 0px 0px 10px;
+}
+
+.inNumber {
+    border-style: hidden;
+    border-radius: 5px;
+    text-align: center;
+    margin-left: 7px;
+    display: inline;
+    width: 65px;
+    height: 25px;
+    box-shadow: rgb(41, 39, 39) 2px 2px 5px;
+}
+
+.inNumber:focus {
+    box-shadow: rgb(94, 221, 211) 1px 1px 4px;
 }

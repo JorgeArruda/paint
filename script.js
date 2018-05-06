@@ -56,7 +56,7 @@ function updateVertex(vertex, posX, posY) {
 }
 
 function drawVertice(posX, posY) {
-
+    data.anim_focus = undefined;
     var vertice = createVertex("vertice_" + data.anim.length + "_" + (mouse.vertice.length + 1));
     mouse.vertice.push([vertice, posX, posY]);
     if (mouse.vertice.length == 1 && data.drawing != "polygon" && data.drawing != "openPolygon" && data.drawing != "closedPolygon") {
@@ -77,7 +77,7 @@ function drawVertice(posX, posY) {
 
         if (data.anim[data.anim.length - 1].svg != undefined)
             document.getElementById("svg").appendChild(data.anim[data.anim.length - 1].svg);
-
+        data.anim_focus = data.anim[data.anim.length - 1];
         mouse.vertice = [];
     }
 }
