@@ -10,6 +10,8 @@
     <script type="text/javascript" src="drag.js"></script>
     <script type="text/javascript" src="svg.js"></script>
     <script type="text/javascript" src="remove.js"></script>
+    <script type="text/javascript" src="button_click.js"></script>
+    <script type="text/javascript" src="calc.js"></script>
 
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
@@ -26,7 +28,7 @@
 
         <img id="undo" title="Undo" class="button" src="icons/edit-undo.svg" onclick="buttonClick()" style="margin-left: 93px; margin-top: 7px;">
         <img id="redo" title="Redo" class="button" src="icons/edit-redo.svg" onclick="buttonClick()" style="margin-left: 122px; margin-top: 7px;">
-        <img id="delete" title="Delete" class="button" src="icons/trash.svg" onclick="buttonDelete()" style="margin-left: 151px; margin-top: 7px;">
+        <img id="delete" title="Delete" class="button" src="icons/trash.svg" onclick="button_delete()" style="margin-left: 151px; margin-top: 7px;">
 
         <img id="cut" title="Cut" class="button" src="icons/edit-cut.svg" onclick="buttonClick()" style="margin-left: 93px; margin-top: 31px;">
         <img id="copy" title="Copy" class="button" src="icons/edit-copy.svg" onclick="buttonClick()" style="margin-left: 122px; margin-top: 31px;">
@@ -36,24 +38,24 @@
         <img src="image/limit.png" width="2px" height="50" style="position: absolute; margin-left: 190px; margin-top: 5px;">
 
 
-        <img id="point" title="Draw point" class="drawing" src="icons/draw-circle.svg" style="margin-left: 205px; margin-top: 7px;">
+        <img id="point" title="Draw point" class="drawing" src="icons/draw-circle.svg" onclick="buttons_drawing(event)" style="margin-left: 205px; margin-top: 7px;">
         <p class="text" style="margin-left: 230px; margin-top: 2px;">Point</p>
 
-        <img id="line" title="Draw line" class="drawing" src="icons/draw-line.svg" style="margin-left: 205px; margin-top: 31px;">
+        <img id="line" title="Draw line" class="drawing" src="icons/draw-line.svg" onclick="buttons_drawing(event)" style="margin-left: 205px; margin-top: 31px;">
         <p class="text" style="margin-left: 230px; margin-top: 26px;">Line</p>
 
 
-        <img id="triangle" title="Draw Triangle" class="drawing" src="icons/draw-triangle.svg" style="margin-left: 275px; margin-top: 7px;">
+        <img id="triangle" title="Draw Triangle" class="drawing" src="icons/draw-triangle.svg" onclick="buttons_drawing(event)" style="margin-left: 275px; margin-top: 7px;">
         <p class="text" style="margin-left: 299px; margin-top: 2px;">Triangle</p>
 
-        <img id="rectangle" title="Draw Rectangle" class="drawing" src="icons/draw-rectangle.svg" style="margin-left: 275px; margin-top: 31px;">
+        <img id="rectangle" title="Draw Rectangle" class="drawing" src="icons/draw-rectangle.svg" onclick="buttons_drawing(event)" style="margin-left: 275px; margin-top: 31px;">
         <p class="text" style="margin-left: 299px; margin-top:  26px;">Rectangle</p>
 
 
-        <img id="polygon" title="Draw Polygon" class="drawing" src="icons/draw-polygon.svg" style="margin-left: 375px; margin-top: 7px;">
+        <img id="polygon" title="Draw Polygon" class="drawing" src="icons/draw-polygon.svg" onclick="buttons_drawing(event)" style="margin-left: 375px; margin-top: 7px;">
         <p class="text" style="margin-left: 400px; margin-top: 2px;">Polygon</p>
 
-        <img id="star" title="Draw Star" class="drawing" src="icons/draw-star.svg" style="margin-left: 375px; margin-top: 31px;">
+        <img id="star" title="Draw Star" class="drawing" src="icons/draw-star.svg" onclick="buttons_drawing(event)" style="margin-left: 375px; margin-top: 31px;">
         <p class="text" style="margin-left: 400px; margin-top: 26px;">Star</p>
 
 
@@ -69,16 +71,16 @@
 
         <img src="image/limit.png" width="2px" height="50" style="position: absolute; margin-left: 585px; margin-top: 5px;">
 
-        <img id="translate" title="Translate - Move" class="transform" src="icons/transform-translation.svg" onclick="transform(event)" style="margin-left: 600px; margin-top: 7px;">
-        <img id="rotate" title="Rotate" class="transform" src="icons/transform-rotate.svg" onclick="transform(event)" style="margin-left: 629px; margin-top: 7px;">
+        <img id="translate" title="Translate - Move" class="transform" src="icons/transform-translation.svg" onclick="buttons_transform(event)" style="margin-left: 600px; margin-top: 7px;">
+        <img id="rotate" title="Rotate" class="transform" src="icons/transform-rotate.svg" onclick="buttons_transform(event)" style="margin-left: 629px; margin-top: 7px;">
         
-        <img id="shear" title="Shear" class="transform" src="icons/transform-shear.svg" onclick="transform(event)" style="margin-left: 600px; margin-top: 31px;">
-        <img id="scale" title="Scale" class="transform" src="icons/transform-scale.svg" onclick="transform(event)" style="margin-left: 629px; margin-top: 31px;">
+        <img id="shear" title="Shear" class="transform" src="icons/transform-shear.svg" onclick="buttons_transform(event)" style="margin-left: 600px; margin-top: 31px;">
+        <img id="scale" title="Scale" class="transform" src="icons/transform-scale.svg" onclick="buttons_transform(event)" style="margin-left: 629px; margin-top: 31px;">
         
     </div>
 
     <div id="divEdit" hidden="true">
-        <div class="editRectangle">
+        <div id="edit_poligon" class="edit">
             <p class="textButton" onclick="drawPolygon();">Draw</p>
             <div class="radioButtons" >
               <div class="openPoligon">
@@ -90,7 +92,6 @@
                 <label for="closedPolygon" class="text" style="cursor: pointer; font-size: 12px; position: relative;">Closed</label>
               </div>
             </div>
-
         </div>
     </div>
 
@@ -103,8 +104,6 @@
 </body>
 
 <script>
-    var canvas;
-    var gl;
     init();
 
     function buttonClick(e) {

@@ -37,11 +37,12 @@ body {
     transition: opacity 0.5s linear;
 }
 
-.editRectangle {
+.edit {
     margin: 5px;
     width: 100%;
     height: 100%;
     vertical-align: middle;
+    display: none;
 }
 
 .radioButtons {

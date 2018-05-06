@@ -1,5 +1,5 @@
 function createPolygon(drawing) {
-    console.log("createPolygon(",drawing.type,")", getNumVertice(drawing.type));
+    console.log("createPolygon(", drawing.type, ")", getNumVertice(drawing.type));
     var points = [];
     if (drawing.type == "openPolygon") {
         for (var index = 0; index < drawing.vertices.length; index++)
@@ -25,7 +25,7 @@ function updatePolygon(drawing, id) {
         for (var index = 0; index < drawing.vertices.length; index++)
             points.push([drawing.vertices[index][1], drawing.vertices[index][2]]);
 
-        return svgOpenPolygon(data.drawing + "_" + id, points, drawing.color);   
+        return svgOpenPolygon(data.drawing + "_" + id, points, drawing.color);
     }
 
     if (drawing.numVertice == 2)
@@ -56,7 +56,7 @@ function updateVertex(vertex, posX, posY) {
 }
 
 function drawVertice(posX, posY) {
-    
+
     var vertice = createVertex("vertice_" + data.anim.length + "_" + (mouse.vertice.length + 1));
     mouse.vertice.push([vertice, posX, posY]);
     if (mouse.vertice.length == 1 && data.drawing != "polygon" && data.drawing != "openPolygon" && data.drawing != "closedPolygon") {
@@ -74,7 +74,6 @@ function drawVertice(posX, posY) {
         data.anim.push(createDrawing(data.drawing, mouse.vertice, undefined));
 
         data.anim[data.anim.length - 1].svg = createPolygon(data.anim[data.anim.length - 1]);
-        //mouse.polygon.push(data.anim[data.anim.length - 1].svg);
 
         if (data.anim[data.anim.length - 1].svg != undefined)
             document.getElementById("svg").appendChild(data.anim[data.anim.length - 1].svg);
@@ -86,7 +85,7 @@ function drawVertice(posX, posY) {
 function drawPolygon() {
     if (mouse.vertice.length < 3)
         return;
-    if (document.getElementById("openPolygon").checked) 
+    if (document.getElementById("openPolygon").checked)
         data.drawing = "openPolygon";
     else
         data.drawing = "closedPolygon";
@@ -99,12 +98,6 @@ function drawPolygon() {
         document.getElementById("svg").appendChild(data.anim[data.anim.length - 1].svg);
 
     mouse.vertice = [];
-}
-
-function removeTransform() {
-    var vertexControl = document.getElementById("control_translate");
-    if (vertexControl)
-        vertexControl.parentNode.removeChild(vertexControl);
 }
 
 function drawAnim(anim) {
@@ -120,20 +113,4 @@ function drawAnim(anim) {
         if (vertice == undefined || vertice == null)
             document.getElementById("divCanvas").appendChild(anim.vertices[index][0]);
     }
-}
-
-function calcCenterVertex(vertices, returnVertices = false){
-    if (vertices == undefined || vertices.length == 0)
-        return;
-    var minX, minY, maxX, maxY;
-    minX = maxX = vertices[0][1];
-    minY = maxY = vertices[0][2];
-    for (var index = 1; index < vertices.length; index++) {
-        minX = vertices[index][1] < minX ? vertices[index][1] : minX;
-        maxX = vertices[index][1] > maxX ? vertices[index][1] : maxX;
-        minY = vertices[index][2] < minY ? vertices[index][2] : minY;
-        maxY = vertices[index][2] > maxY ? vertices[index][2] : maxY;
-    }
-
-    return !returnVertices ? [(maxX+minX)/2, (maxY+minY)/2] : [[(maxX+minX)/2, (maxY+minY)/2],[minX, minY],[maxX, maxY]];
 }

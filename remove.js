@@ -29,3 +29,9 @@ function removeSelects() {
         }
     }
 }
+
+function removeTransform() {
+    var vertexControl = document.getElementById("control_translate");
+    if (vertexControl)
+        vertexControl.parentNode.removeChild(vertexControl);
+}

@@ -7,27 +7,3 @@ function init() {
     data.color = document.getElementById('color').value;
     setEvent();
 }
-
-function buttonDelete(ev) {
-    var vertex = document.getElementsByClassName("vertice");
-    if (vertex.length > 0 && data.drawing != "select"){
-        var anim = findVertice(vertex.item(0).id)[0];
-        anim.svg.parentNode.removeChild(anim.svg);
-        anim.show = false;
-    }
-    removeVertices();
-    removeSelects();
-    mouse.vertice = [];
-}
-
-function transform(ev) {
-    focusButton(ev);
-    removeSelects();
-
-    if (data.drawing == ev.target.id) {
-        data.drawing = undefined;
-    } else {
-        data.drawing = ev.target.id;
-    }
-}
-
