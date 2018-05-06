@@ -99,12 +99,29 @@
             <p class="textButton" onclick="button_draw_translate(event);">Translate</p>
             <div style="padding: 5px; padding-top: 15px; padding-bottom: 15px; background: rgba(63, 58, 55, 0.78); box-shadow: rgb(0, 0, 0) 2px 2px 5px; border: 1px solid #403a3a;">
                 <div style="display: block; align-items: center;">
-                    <p class="text" style="margin-left: 2px; position: relative; display: inline; font-size: 15px;">X :</p>
-                    <input id="input_pos_x" class="inNumber" type="number" value=0 min="-9000" max="9000" step="1">
+                    <p class="text" style="margin-left: 2px; position: relative; display: inline; font-size: 14px;">X :</p>
+                    <input id="input_pos_x" class="inNumber" type="number" value=0 min="-9000" max="9000" step="10">
+                    <p class="text" style="margin-left: 2px; position: relative; display: inline; font-size: 12px;">px</p>
                 </div>
                 <div style="margin-top: 10px; display: block; align-items: center;">
-                    <p class="text" style="margin-left: 2px; position: relative; display: inline; font-size: 15px;">Y :</p>
-                    <input id="input_pos_y" class="inNumber" type="number" value=0 min="-9000" max="9000" step="1">
+                    <p class="text" style="margin-left: 2px; position: relative; display: inline; font-size: 14px;">Y :</p>
+                    <input id="input_pos_y" class="inNumber" type="number" value=0 min="-9000" max="9000" step="10">
+                    <p class="text" style="margin-left: 2px; position: relative; display: inline; font-size: 12px;">px</p>
+                </div>
+            </div>
+        </div>
+        <div id="div_scale" class="edit">
+            <p class="textButton" onclick="button_draw_scale(event);">Scale</p>
+            <div style="padding: 5px; padding-top: 15px; padding-bottom: 15px; background: rgba(63, 58, 55, 0.78); box-shadow: rgb(0, 0, 0) 2px 2px 5px; border: 1px solid #403a3a;">
+                <div style="display: block; align-items: center;">
+                    <p class="text" style="margin-left: 2px; position: relative; display: inline; font-size: 14px;">X :</p>
+                    <input id="input_scale_x" class="inNumber" type="number" value=100 min="0" max="9000" step="5">
+                    <p class="text" style="margin-left: 2px; position: relative; display: inline; font-size: 12px;">%</p>
+                </div>
+                <div style="margin-top: 10px; display: block; align-items: center;">
+                    <p class="text" style="margin-left: 2px; position: relative; display: inline; font-size: 14px;">Y :</p>
+                    <input id="input_scale_y" class="inNumber" type="number" value=100 min="0" max="9000" step="5">
+                    <p class="text" style="margin-left: 2px; position: relative; display: inline; font-size: 12px;">%</p>
                 </div>
             </div>
         </div>

@@ -94,7 +94,7 @@ function svgSelect(id, vertices) {
 
 function click_svg(evt) {
     console.log("clickPolygon()", evt.target.id);
-    if (data.drawing == "translate" || data.drawing == "edit") {
+    if (data.drawing == "edit" || data.drawing == "translate" || data.drawing == "scale") {
         var anim = findPolygon(evt.target.id);
         removeVertices();
         removeTransform();

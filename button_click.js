@@ -68,10 +68,32 @@ function button_draw_translate(ev){
     data.anim_focus.svg = updatePolygon(data.anim_focus, data.anim_focus.svg.id.split("_")[1]);
     document.getElementById("svg").appendChild(data.anim_focus.svg);
 }
+function button_draw_scale(ev){
+    var scale_x = Number(document.getElementById("input_scale_x").value) / 100;
+    var scale_y = Number(document.getElementById("input_scale_y").value) / 100;
+    if (data.anim_focus == undefined)
+        return;
+    var center = calcCenterVertex(data.anim_focus.vertices, true);
+    var minX = center[1][0];
+    var minY = center[1][1];
+    console.log(minX, minY);
+    for (var index = 0; index < data.anim_focus.vertices.length; index++) {
+        data.anim_focus.vertices[index][1] = ((data.anim_focus.vertices[index][1]-minX) * scale_x) + minX;
+        data.anim_focus.vertices[index][2] = ((data.anim_focus.vertices[index][2]-minY) * scale_y) + minY;
+        data.anim_focus.vertices[index][0].style.left = (data.anim_focus.vertices[index][1] - 5) + "px";
+        data.anim_focus.vertices[index][0].style.top = (data.anim_focus.vertices[index][2] - 5) + "px";
+    }
+    data.anim_focus.svg.parentNode.removeChild(data.anim_focus.svg);
+    data.anim_focus.svg = updatePolygon(data.anim_focus, data.anim_focus.svg.id.split("_")[1]);
+    document.getElementById("svg").appendChild(data.anim_focus.svg);
+}
 
 function divEdit(show, painel) {
-    document.getElementById("div_polygon").style.display = document.getElementById("div_translate").style.display = 'none';
-    if (show && (painel == "div_polygon" || painel ==  "div_translate")) {
+    var divs = document.getElementsByClassName("edit");
+    for (var index = 0; index < divs.length; index++)
+        divs[index].style.display = 'none';
+
+    if (show && (painel == "div_polygon" || painel ==  "div_translate" || painel ==  "div_scale")) {
         document.getElementById(painel).style.display = 'block';
         document.getElementById("divEdit").style.opacity = 1;
         document.getElementById("divEdit").style.marginLeft = '0px';
