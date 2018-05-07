@@ -89,6 +89,40 @@ function button_draw_scale(ev) {
     document.getElementById("svg").appendChild(data.anim_focus.svg);
 }
 
+function button_draw_rotate(ev) {
+    var angle = Number(document.getElementById("input_angle").value);
+    if (document.getElementById("radio_img_1").style.boxShadow != "none")
+        angle = -angle;
+
+    var angle_rad = ((angle) / 360)*3.141592653589793*2;
+    
+    //var angle_rad = (((270)) / 360)*3.141592653589793;
+    var cos_angle = Math.cos(angle_rad);
+    var sin_angle = Math.sin(angle_rad);
+    console.log("cos_angle", cos_angle, "sin_angle",sin_angle)
+    if (data.anim_focus == undefined)
+        return;
+    var center = calcCenterVertex(data.anim_focus.vertices, true);
+    var minX = center[0][0];
+    var minY = center[0][1];
+    if (data.anim_focus.vertices.length > 2){
+        var area = calcAreaPolygon(data.anim_focus.vertices);
+        [minX, minY] = calcCentroidPolygon(data.anim_focus.vertices, area);
+    }
+    console.log(minX, minY);
+    for (var index = 0; index < data.anim_focus.vertices.length; index++) {
+        var pos_x = data.anim_focus.vertices[index][1] - minX;
+        var pos_y = data.anim_focus.vertices[index][2] - minY;
+        data.anim_focus.vertices[index][1] = ( (pos_x * cos_angle) - (pos_y * sin_angle) ) + minX;
+        data.anim_focus.vertices[index][2] = ( (pos_y * cos_angle) + (pos_x * sin_angle) ) + minY;
+        data.anim_focus.vertices[index][0].style.left = (data.anim_focus.vertices[index][1] - 5) + "px";
+        data.anim_focus.vertices[index][0].style.top = (data.anim_focus.vertices[index][2] - 5) + "px";
+    }
+    data.anim_focus.svg.parentNode.removeChild(data.anim_focus.svg);
+    data.anim_focus.svg = updatePolygon(data.anim_focus, data.anim_focus.svg.id.split("_")[1]);
+    document.getElementById("svg").appendChild(data.anim_focus.svg);
+}
+
 function divEdit(show, painel) {
     var divs = document.getElementsByClassName("edit");
     for (var index = 0; index < divs.length; index++)
