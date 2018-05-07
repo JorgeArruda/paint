@@ -75,12 +75,43 @@ function button_draw_scale(ev) {
     if (data.anim_focus == undefined)
         return;
     var center = calcCenterVertex(data.anim_focus.vertices, true);
-    var minX = center[1][0];
-    var minY = center[1][1];
+    var minX = center[0][0];
+    var minY = center[0][1];
+    if (data.anim_focus.vertices.length > 2){
+        var area = calcAreaPolygon(data.anim_focus.vertices);
+        [minX, minY] = calcCentroidPolygon(data.anim_focus.vertices, area);
+    }
     console.log(minX, minY);
     for (var index = 0; index < data.anim_focus.vertices.length; index++) {
         data.anim_focus.vertices[index][1] = ((data.anim_focus.vertices[index][1] - minX) * scale_x) + minX;
         data.anim_focus.vertices[index][2] = ((data.anim_focus.vertices[index][2] - minY) * scale_y) + minY;
+        data.anim_focus.vertices[index][0].style.left = (data.anim_focus.vertices[index][1] - 5) + "px";
+        data.anim_focus.vertices[index][0].style.top = (data.anim_focus.vertices[index][2] - 5) + "px";
+    }
+    data.anim_focus.svg.parentNode.removeChild(data.anim_focus.svg);
+    data.anim_focus.svg = updatePolygon(data.anim_focus, data.anim_focus.svg.id.split("_")[1]);
+    document.getElementById("svg").appendChild(data.anim_focus.svg);
+}
+
+function button_draw_shear(ev) {
+    var shear_x = ((-Number(document.getElementById("input_shear_x").value)) / 360)*3.141592653589793*2;
+    var shear_y = ((-Number(document.getElementById("input_shear_y").value)) / 360)*3.141592653589793*2;
+    if (data.anim_focus == undefined)
+        return;
+    
+    var [tan_angle_x, tan_angle_y]  = [Math.tan(shear_x), Math.tan(shear_y)];
+    console.log("tan", [tan_angle_x, tan_angle_y]);
+    var [minX, minY] = calcCenterVertex(data.anim_focus.vertices, true)[0];
+    if (data.anim_focus.vertices.length > 2){
+        var area = calcAreaPolygon(data.anim_focus.vertices);
+        [minX, minY] = calcCentroidPolygon(data.anim_focus.vertices, area);
+    }
+    console.log(minX, minY);
+    for (var index = 0; index < data.anim_focus.vertices.length; index++) {
+        var pos_x = data.anim_focus.vertices[index][1] - minX;
+        var pos_y = data.anim_focus.vertices[index][2] - minY;
+        data.anim_focus.vertices[index][1] = ( (pos_x ) + (pos_y * tan_angle_x) ) + minX;
+        data.anim_focus.vertices[index][2] = ( (pos_y ) + (pos_x * tan_angle_y) ) + minY;
         data.anim_focus.vertices[index][0].style.left = (data.anim_focus.vertices[index][1] - 5) + "px";
         data.anim_focus.vertices[index][0].style.top = (data.anim_focus.vertices[index][2] - 5) + "px";
     }
@@ -96,15 +127,13 @@ function button_draw_rotate(ev) {
 
     var angle_rad = ((angle) / 360)*3.141592653589793*2;
     
-    //var angle_rad = (((270)) / 360)*3.141592653589793;
     var cos_angle = Math.cos(angle_rad);
     var sin_angle = Math.sin(angle_rad);
     console.log("cos_angle", cos_angle, "sin_angle",sin_angle)
     if (data.anim_focus == undefined)
         return;
-    var center = calcCenterVertex(data.anim_focus.vertices, true);
-    var minX = center[0][0];
-    var minY = center[0][1];
+
+    var [minX, minY] = calcCenterVertex(data.anim_focus.vertices, true)[0];
     if (data.anim_focus.vertices.length > 2){
         var area = calcAreaPolygon(data.anim_focus.vertices);
         [minX, minY] = calcCentroidPolygon(data.anim_focus.vertices, area);
@@ -128,7 +157,7 @@ function divEdit(show, painel) {
     for (var index = 0; index < divs.length; index++)
         divs[index].style.display = 'none';
 
-    if (show && (painel == "div_polygon" || painel == "div_translate" || painel == "div_scale" || painel == "div_rotate")) {
+    if (show && (painel == "div_polygon" || painel == "div_translate" || painel == "div_scale" || painel == "div_shear" || painel == "div_rotate")) {
         document.getElementById(painel).style.display = 'block';
         document.getElementById("divEdit").style.opacity = 1;
         document.getElementById("divEdit").style.marginLeft = '0px';
