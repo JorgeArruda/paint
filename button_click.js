@@ -46,14 +46,14 @@ function buttons_transform(ev) {
     data.anim_focus = undefined;
     if (data.drawing == ev.target.id) {
         data.drawing = undefined;
-        divEdit(false, "div_"+ev.target.id);
+        divEdit(false, "div_" + ev.target.id);
     } else {
         data.drawing = ev.target.id;
-        divEdit(true, "div_"+ev.target.id);
+        divEdit(true, "div_" + ev.target.id);
     }
 }
 
-function button_draw_translate(ev){
+function button_draw_translate(ev) {
     var valor_x = Number(document.getElementById("input_pos_x").value);
     var valor_y = Number(document.getElementById("input_pos_y").value);
     if (data.anim_focus == undefined)
@@ -68,7 +68,8 @@ function button_draw_translate(ev){
     data.anim_focus.svg = updatePolygon(data.anim_focus, data.anim_focus.svg.id.split("_")[1]);
     document.getElementById("svg").appendChild(data.anim_focus.svg);
 }
-function button_draw_scale(ev){
+
+function button_draw_scale(ev) {
     var scale_x = Number(document.getElementById("input_scale_x").value) / 100;
     var scale_y = Number(document.getElementById("input_scale_y").value) / 100;
     if (data.anim_focus == undefined)
@@ -78,8 +79,8 @@ function button_draw_scale(ev){
     var minY = center[1][1];
     console.log(minX, minY);
     for (var index = 0; index < data.anim_focus.vertices.length; index++) {
-        data.anim_focus.vertices[index][1] = ((data.anim_focus.vertices[index][1]-minX) * scale_x) + minX;
-        data.anim_focus.vertices[index][2] = ((data.anim_focus.vertices[index][2]-minY) * scale_y) + minY;
+        data.anim_focus.vertices[index][1] = ((data.anim_focus.vertices[index][1] - minX) * scale_x) + minX;
+        data.anim_focus.vertices[index][2] = ((data.anim_focus.vertices[index][2] - minY) * scale_y) + minY;
         data.anim_focus.vertices[index][0].style.left = (data.anim_focus.vertices[index][1] - 5) + "px";
         data.anim_focus.vertices[index][0].style.top = (data.anim_focus.vertices[index][2] - 5) + "px";
     }
@@ -93,7 +94,7 @@ function divEdit(show, painel) {
     for (var index = 0; index < divs.length; index++)
         divs[index].style.display = 'none';
 
-    if (show && (painel == "div_polygon" || painel ==  "div_translate" || painel ==  "div_scale")) {
+    if (show && (painel == "div_polygon" || painel == "div_translate" || painel == "div_scale" || painel == "div_rotate")) {
         document.getElementById(painel).style.display = 'block';
         document.getElementById("divEdit").style.opacity = 1;
         document.getElementById("divEdit").style.marginLeft = '0px';
@@ -126,5 +127,22 @@ function focusButton(ev) {
         if (ev.target.id != buttonTransform[index].id) {
             buttonTransform[index].style.boxShadow = "none";
         }
+    }
+}
+
+function button_radio_img(event) {
+    if (event.target.style.boxShadow == "rgb(0, 0, 0) 2px 2px 6px") {
+        event.target.style.boxShadow = "none";
+        var radios = document.getElementsByClassName("radioimg");
+        for (var index = 0; index < radios.length; index++)
+            if (radios[index].id != event.target.id)
+                radios[index].style.boxShadow = "rgb(0, 0, 0) 2px 2px 6px";
+
+    } else {
+        event.target.style.boxShadow = "rgb(0, 0, 0) 2px 2px 6px";
+        var radios = document.getElementsByClassName("radioimg");
+        for (var index = 0; index < radios.length; index++)
+            if (radios[index].id != event.target.id)
+                radios[index].style.boxShadow = "none";
     }
 }

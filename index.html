@@ -125,6 +125,22 @@
                 </div>
             </div>
         </div>
+        <div id="div_rotate" class="edit">
+            <p class="textButton" onclick="button_draw_scale(event);">Rotate</p>
+            <div style="padding: 5px; padding-top: 15px; padding-bottom: 15px; background: rgba(63, 58, 55, 0.78); box-shadow: rgb(0, 0, 0) 2px 2px 5px; border: 1px solid #403a3a;">
+                <div style="display: block; align-items: center;">
+                    <p class="text" style="margin-left: 2px; position: relative; display: inline; font-size: 12px;">Angle :</p>
+                    <input id="input_angulo" class="inNumber" type="number" value=0 min="-9000" max="9000" step="5" style="width: 40px;">
+                    <p class="text" style="margin-left: 2px; position: relative; display: inline; font-size: 14px;">°</p>
+                </div>
+                <div style="margin-top: 10px; display: block; align-items: center;">
+                    <div style="width: 68px; height: 25px; margin-left: 18px; padding-top: 8px;" >
+                        <img id="radio_img_1" class="radioimg" onclick="button_radio_img(event)" src="icons/rotate-left.svg">
+                        <img id="radio_img_2" class="radioimg" onclick="button_radio_img(event)" src="icons/rotate-right.svg" style="margin-left: 8px; box-shadow: none;">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="divCanvas">
