@@ -7,7 +7,7 @@ var data = {
     color: undefined,
     states: [],
     anim_focus: undefined,
-    anim: []  // createDrawing()
+    anim: [] // createDrawing()
 };
 
 var mouse = {
@@ -45,7 +45,7 @@ function createDrawing(operation, vertice, svg) {
  */
 function findVertice(idVertice) { // type _ anim.lenght-1 _ vertice.lenght
     var ret = [];
-    if (data.anim[Number(idVertice.split("_")[1])] == undefined){
+    if (data.anim[Number(idVertice.split("_")[1])] == undefined) {
         for (let index = 0; index < mouse.vertice.length; index++) {
             if (mouse.vertice[index][0].id == idVertice)
                 return mouse.vertice[index];
@@ -54,7 +54,7 @@ function findVertice(idVertice) { // type _ anim.lenght-1 _ vertice.lenght
     }
     ret.push(data.anim[Number(idVertice.split("_")[1])]);
     ret.push(Number(idVertice.split("_")[1]));
-    ret.push(Number(idVertice.split("_")[2])-1);
+    ret.push(Number(idVertice.split("_")[2]) - 1);
     return ret;
 }
 
@@ -63,11 +63,11 @@ function findVertice(idVertice) { // type _ anim.lenght-1 _ vertice.lenght
  * @return [Return object (drawing) and indice of polygon position, in a array]
  */
 function findPolygon(idPolygon) {
-    
+
     var ret = [];
-    if (data.anim[Number(idPolygon.split("_")[1])-1] != undefined){
-        ret.push(data.anim[Number(idPolygon.split("_")[1])-1]);
-        ret.push(Number(idPolygon.split("_")[1])-1);
+    if (data.anim[Number(idPolygon.split("_")[1]) - 1] != undefined) {
+        ret.push(data.anim[Number(idPolygon.split("_")[1]) - 1]);
+        ret.push(Number(idPolygon.split("_")[1]) - 1);
         return ret;
     }
 }

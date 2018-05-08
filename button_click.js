@@ -58,13 +58,13 @@ function button_draw_translate(ev) {
         return;
     var valor_x = Number(document.getElementById("input_pos_x").value);
     var valor_y = Number(document.getElementById("input_pos_y").value);
-    
+
     const anim = data.anim_focus;
     for (var x = 0; x < anim.vertices.length; x++) {
         anim.vertices[x][1] = anim.vertices[x][1] + valor_x;
         anim.vertices[x][2] = anim.vertices[x][2] + valor_y;
         anim.vertices[x][0].style.left = (anim.vertices[x][1] - 5) + "px";
-        anim.vertices[x][0].style.top  = (anim.vertices[x][2] - 5) + "px";
+        anim.vertices[x][0].style.top = (anim.vertices[x][2] - 5) + "px";
     }
 
     anim.svg.parentNode.removeChild(anim.svg);
@@ -78,14 +78,14 @@ function button_draw_scale(ev) {
     const anim = data.anim_focus;
 
     var [minX, minY] = calcCenterVertex(anim.vertices, true)[0];
-    if (anim.vertices.length > 2){
+    if (anim.vertices.length > 2) {
         var area = calcAreaPolygon(anim.vertices);
         [minX, minY] = calcCentroidPolygon(anim.vertices, area);
     }
 
     var scale_x = Number(document.getElementById("input_scale_x").value) / 100;
     var scale_y = Number(document.getElementById("input_scale_y").value) / 100;
-    
+
     for (var index = 0; index < anim.vertices.length; index++) {
         anim.vertices[index][1] = ((anim.vertices[index][1] - minX) * scale_x) + minX;
         anim.vertices[index][2] = ((anim.vertices[index][2] - minY) * scale_y) + minY;
@@ -101,13 +101,13 @@ function button_draw_shear(ev) {
     if (data.anim_focus == undefined)
         return;
     const anim = data.anim_focus;
-    var shear_x = ((-Number(document.getElementById("input_shear_x").value)) / 360)*3.141592653589793*2;
-    var shear_y = ((-Number(document.getElementById("input_shear_y").value)) / 360)*3.141592653589793*2;
-    
-    var [tan_angle_x, tan_angle_y]  = [Math.tan(shear_x), Math.tan(shear_y)];
+    var shear_x = ((-Number(document.getElementById("input_shear_x").value)) / 360) * 3.141592653589793 * 2;
+    var shear_y = ((-Number(document.getElementById("input_shear_y").value)) / 360) * 3.141592653589793 * 2;
+
+    var [tan_angle_x, tan_angle_y] = [Math.tan(shear_x), Math.tan(shear_y)];
 
     var [minX, minY] = calcCenterVertex(anim.vertices, true)[0];
-    if (anim.vertices.length > 2){
+    if (anim.vertices.length > 2) {
         var area = calcAreaPolygon(anim.vertices);
         [minX, minY] = calcCentroidPolygon(anim.vertices, area);
     }
@@ -115,8 +115,8 @@ function button_draw_shear(ev) {
     for (var index = 0; index < anim.vertices.length; index++) {
         var pos_x = anim.vertices[index][1] - minX;
         var pos_y = anim.vertices[index][2] - minY;
-        anim.vertices[index][1] = ( (pos_x ) + (pos_y * tan_angle_x) ) + minX;
-        anim.vertices[index][2] = ( (pos_y ) + (pos_x * tan_angle_y) ) + minY;
+        anim.vertices[index][1] = ((pos_x) + (pos_y * tan_angle_x)) + minX;
+        anim.vertices[index][2] = ((pos_y) + (pos_x * tan_angle_y)) + minY;
         anim.vertices[index][0].style.left = (anim.vertices[index][1] - 5) + "px";
         anim.vertices[index][0].style.top = (anim.vertices[index][2] - 5) + "px";
     }
@@ -129,25 +129,25 @@ function button_draw_rotate(ev) {
     if (data.anim_focus == undefined)
         return;
     const anim = data.anim_focus;
-        
+
     var angle = Number(document.getElementById("input_angle").value);
     if (document.getElementById("radio_img_1").style.boxShadow != "none")
         angle = -angle;
 
-    var angle_rad = ((angle) / 360)*3.141592653589793*2;
-    
+    var angle_rad = ((angle) / 360) * 3.141592653589793 * 2;
+
     var cos_angle = Math.cos(angle_rad);
     var sin_angle = Math.sin(angle_rad);
-    console.log("cos_angle", cos_angle, "sin_angle",sin_angle)
+    console.log("cos_angle", cos_angle, "sin_angle", sin_angle)
 
     var [minX, minY] = calcCenterVertex(anim.vertices, true)[0];
-    if (anim.vertices.length > 2){
+    if (anim.vertices.length > 2) {
         var area = calcAreaPolygon(anim.vertices);
         [minX, minY] = calcCentroidPolygon(anim.vertices, area);
     }
     console.log(minX, minY);
     anim.vertices = rotate_polygon(anim.vertices, cos_angle, sin_angle, minX, minY);
-    
+
     anim.svg.parentNode.removeChild(anim.svg);
     anim.svg = updatePolygon(anim, anim.svg.id.split("_")[1]);
     document.getElementById("svg").appendChild(anim.svg);
@@ -159,14 +159,14 @@ function button_draw_mirror(ev) {
     const anim = data.anim_focus;
     const angle = -Number(document.getElementById("input_mirror_angle").value);
 
-    var angle_rad = ((-45+angle) / 360)*3.141592653589793*2;
-    
+    var angle_rad = ((-45 + angle) / 360) * 3.141592653589793 * 2;
+
     var cos_angle = Math.cos(angle_rad);
     var sin_angle = Math.sin(angle_rad);
-    console.log("cos_angle", cos_angle, "sin_angle",sin_angle)
+    console.log("cos_angle", cos_angle, "sin_angle", sin_angle)
 
     var [minX, minY] = calcCenterVertex(anim.vertices, true)[0];
-    if (anim.vertices.length > 2){
+    if (anim.vertices.length > 2) {
         var area = calcAreaPolygon(anim.vertices);
         [minX, minY] = calcCentroidPolygon(anim.vertices, area);
     }
@@ -175,7 +175,10 @@ function button_draw_mirror(ev) {
     anim.vertices = rotate_polygon(anim.vertices, cos_angle, sin_angle, minX, minY);
 
     var mirror_y = Number(document.getElementById("input_mirror_y").value);
-    var vertices = rotate_straight_simple([[mirror_y, -1000], [mirror_y, 1400]], angle);
+    var vertices = rotate_straight_simple([
+        [mirror_y, -1000],
+        [mirror_y, 1400]
+    ], angle);
 
     for (var index = 0; index < anim.vertices.length; index++) {
         var pos_x = anim.vertices[index][1] - 0;
@@ -184,17 +187,17 @@ function button_draw_mirror(ev) {
         var distance_poin_straight = calc_distance_poin_straight(vertices, [pos_x, pos_y]);
         console.log("distance_poin_straight", distance_poin_straight);
 
-        anim.vertices[index][1] = -pos_x+(2*minX)-(2*(minX-mirror_y));
-        anim.vertices[index][2] = pos_y ;
+        anim.vertices[index][1] = -pos_x + (2 * minX) - (2 * (minX - mirror_y));
+        anim.vertices[index][2] = pos_y;
         anim.vertices[index][0].style.left = (anim.vertices[index][1] - 5) + "px";
-        anim.vertices[index][0].style.top  = (anim.vertices[index][2] - 5) + "px";
+        anim.vertices[index][0].style.top = (anim.vertices[index][2] - 5) + "px";
     }
     [minX, minY] = calcCenterVertex(anim.vertices, true)[0];
-    if (anim.vertices.length > 2){
+    if (anim.vertices.length > 2) {
         var area = calcAreaPolygon(anim.vertices);
         [minX, minY] = calcCentroidPolygon(anim.vertices, area);
     }
-    angle_rad = ((-45+angle) / 360)*3.141592653589793*2;
+    angle_rad = ((-45 + angle) / 360) * 3.141592653589793 * 2;
 
     cos_angle = Math.cos(angle_rad);
     sin_angle = Math.sin(angle_rad);
@@ -214,10 +217,10 @@ function divEdit(show, painel) {
         document.getElementById(painel).style.display = 'block';
         document.getElementById("divEdit").style.opacity = 1;
         document.getElementById("divEdit").style.marginLeft = '0px';
-        if (painel == "div_mirror"){
+        if (painel == "div_mirror") {
             var mirror_y = Number(document.getElementById("input_mirror_y").value);
 
-            var svg = svgAresta("mirror_line", mirror_y, -1000, mirror_y, 1000,"#000000");
+            var svg = svgAresta("mirror_line", mirror_y, -1000, mirror_y, 1000, "#000000");
             document.getElementById("svg").appendChild(svg);
         }
     } else {
@@ -226,14 +229,17 @@ function divEdit(show, painel) {
     }
 }
 
-function update_mirror(event){
+function update_mirror(event) {
     document.getElementById("mirror_line").parentElement.removeChild(document.getElementById("mirror_line"));
-    var mirror_y = Number(document.getElementById("input_mirror_y").value);    
+    var mirror_y = Number(document.getElementById("input_mirror_y").value);
     const angle = -Number(document.getElementById("input_mirror_angle").value);
 
-    var vertices = rotate_straight_simple([[mirror_y, -1000], [mirror_y, 1400]], angle);
-    
-    var svg = svgAresta("mirror_line", vertices[0][0], vertices[0][1], vertices[1][0], vertices[1][1],"#000000");
+    var vertices = rotate_straight_simple([
+        [mirror_y, -1000],
+        [mirror_y, 1400]
+    ], angle);
+
+    var svg = svgAresta("mirror_line", vertices[0][0], vertices[0][1], vertices[1][0], vertices[1][1], "#000000");
     document.getElementById("svg").appendChild(svg);
 }
 

@@ -6,4 +6,4 @@ function init() {
 
     data.color = document.getElementById('color').value;
     setEvent();
-}
+    }
