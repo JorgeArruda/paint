@@ -94,23 +94,14 @@ function svgSelect(id, vertices) {
 
 function click_svg(evt) {
     console.log("clickPolygon()", evt.target.id);
-    if (data.drawing == "edit" || data.drawing == "translate" || data.drawing == "scale" || data.drawing == "shear" || data.drawing == "rotate") {
+    const type = data.drawing;
+    const transform = type == "translate" || type == "scale" || type == "shear" || type == "rotate" || type == "mirror";
+    if (type == "edit" || transform) {
         var anim = findPolygon(evt.target.id);
         removeVertices();
         removeTransform();
         drawAnim(anim[0]);
         data.anim_focus = anim[0];
-        // if (data.drawing == "translate") {
-        //     var vertex = document.getElementsByClassName("vertice");
-        //     if (vertex.length > 0 && mouse.vertice.length == 0) {
-        //         var anim = findVertice(vertex.item(0).id)[0];
-        //         var positionCenter = calcCenterVertex(anim.vertices);
-        //         console.log("ok", positionCenter);
-        //         var vertexControl = createVertexControl("control_translate", positionCenter[0], positionCenter[1]);
-        //         document.getElementById("divCanvas").appendChild(vertexControl);
-        //     }
-        //     removeVertices();
-        // }
     }
 }
 

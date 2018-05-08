@@ -35,7 +35,7 @@ function createDrawing(operation, vertice, svg) {
         numVertice: getNumVertice(operation),
         show: true
     };
-
+    data.anim
     return drawing;
 }
 

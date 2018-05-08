@@ -78,6 +78,7 @@
 
         <img id="shear" title="Shear" class="transform" src="icons/transform-shear.svg" onclick="buttons_transform(event)" style="margin-left: 600px; margin-top: 31px;">
         <img id="scale" title="Scale" class="transform" src="icons/transform-scale.svg" onclick="buttons_transform(event)" style="margin-left: 629px; margin-top: 31px;">
+        <img id="mirror" title="Mirror" class="transform" src="icons/transform-mirror.svg" onclick="buttons_transform(event)" style="margin-left: 658px; margin-top: 21px;">
 
     </div>
 
@@ -126,20 +127,20 @@
             </div>
         </div>
         <div id="div_shear" class="edit">
-                <p class="textButton" onclick="button_draw_shear(event);">Shear</p>
-                <div style="padding: 5px; padding-top: 15px; padding-bottom: 15px; background: rgba(63, 58, 55, 0.78); box-shadow: rgb(0, 0, 0) 2px 2px 5px; border: 1px solid #403a3a;">
-                    <div style="display: block; align-items: center;">
-                        <p class="text" style="margin-left: 2px; position: relative; display: inline; font-size: 14px;">X :</p>
-                        <input id="input_shear_x" class="inNumber" type="number" value=0 min="-9000" max="9000" step="5">
-                        <p class="text" style="margin-left: 2px; position: relative; display: inline; font-size: 14px;">°</p>
-                    </div>
-                    <div style="margin-top: 10px; display: block; align-items: center;">
-                        <p class="text" style="margin-left: 2px; position: relative; display: inline; font-size: 14px;">Y :</p>
-                        <input id="input_shear_y" class="inNumber" type="number" value=0 min="-9000" max="9000" step="5">
-                        <p class="text" style="margin-left: 2px; position: relative; display: inline; font-size: 14px;">°</p>
-                    </div>
+            <p class="textButton" onclick="button_draw_shear(event);">Shear</p>
+            <div style="padding: 5px; padding-top: 15px; padding-bottom: 15px; background: rgba(63, 58, 55, 0.78); box-shadow: rgb(0, 0, 0) 2px 2px 5px; border: 1px solid #403a3a;">
+                <div style="display: block; align-items: center;">
+                    <p class="text" style="margin-left: 2px; position: relative; display: inline; font-size: 14px;">X :</p>
+                    <input id="input_shear_x" class="inNumber" type="number" value=0 min="-9000" max="9000" step="5">
+                    <p class="text" style="margin-left: 2px; position: relative; display: inline; font-size: 14px;">°</p>
+                </div>
+                <div style="margin-top: 10px; display: block; align-items: center;">
+                    <p class="text" style="margin-left: 2px; position: relative; display: inline; font-size: 14px;">Y :</p>
+                    <input id="input_shear_y" class="inNumber" type="number" value=0 min="-9000" max="9000" step="5">
+                    <p class="text" style="margin-left: 2px; position: relative; display: inline; font-size: 14px;">°</p>
                 </div>
             </div>
+        </div>
         <div id="div_rotate" class="edit">
             <p class="textButton" onclick="button_draw_rotate(event);">Rotate</p>
             <div style="padding: 5px; padding-top: 15px; padding-bottom: 15px; background: rgba(63, 58, 55, 0.78); box-shadow: rgb(0, 0, 0) 2px 2px 5px; border: 1px solid #403a3a;">
@@ -149,10 +150,27 @@
                     <p class="text" style="margin-left: 2px; position: relative; display: inline; font-size: 14px;">°</p>
                 </div>
                 <div style="margin-top: 10px; display: block; align-items: center;">
-                    <div style="width: 68px; height: 25px; margin-left: 18px; padding-top: 8px;" >
+                    <div style="width: 68px; height: 25px; margin-left: 18px; padding-top: 8px;">
                         <img id="radio_img_1" class="radioimg" onclick="button_radio_img(event)" src="icons/rotate-left.svg">
                         <img id="radio_img_2" class="radioimg" onclick="button_radio_img(event)" src="icons/rotate-right.svg" style="margin-left: 8px; box-shadow: none;">
                     </div>
+                </div>
+            </div>
+        </div>
+        <div id="div_mirror" class="edit">
+            <p class="textButton" onclick="button_draw_mirror(event);">Mirror</p>
+            <div style="padding: 5px; padding-top: 15px; padding-bottom: 15px; background: rgba(63, 58, 55, 0.78); box-shadow: rgb(0, 0, 0) 2px 2px 5px; border: 1px solid #403a3a;">
+                <div style="display: block; align-items: center;">
+                    <p class="text" style="margin-left: 1px; position: relative; display: inline; font-size: 12px;">y :</p>
+                    <input id="input_mirror_y" class="inNumber" type="number" value=200 onclick="update_mirror(event)" onchange="update_mirror(event)"
+                        min="0" max="400" step="10">
+                    <p class="text" style="margin-left: 1px; position: relative; display: inline; font-size: 11px;">px</p>
+                </div>
+                <div style="margin-top: 10px; display: block; align-items: center;">
+                    <p class="text" style="margin-left: 2px; position: relative; display: inline; font-size: 12px;">Angle :</p>
+                    <input id="input_mirror_angle" class="inNumber" type="number" value=0 onclick="update_mirror(event)" onchange="update_mirror(event)"
+                    min="-9000" max="9000" step="5" style="width: 40px;">
+                    <p class="text" style="margin-left: 2px; position: relative; display: inline; font-size: 14px;">°</p>
                 </div>
             </div>
         </div>

@@ -5,7 +5,7 @@ function setEvent() {
             updateSelectAnimation(e.pageX - (window.innerWidth / 2 - data.canvas.width / 2), e.pageY - 71);
     };
     data.svg.onclick = data.canvas.onclick = function (e) {
-        if (data.drawing != undefined && data.drawing != "edit" && data.drawing != "select" && data.drawing != "translate" && data.drawing != "rotate" && data.drawing != "shear" && data.drawing != "scale"){
+        if (data.drawing != undefined && data.drawing != "edit" && data.drawing != "select" && data.drawing != "translate" && data.drawing != "rotate" && data.drawing != "shear" && data.drawing != "scale" && data.drawing != "mirror"){
             if (mouse.vertice.length == 0)
                 removeVertices();
             drawVertice(e.pageX - (window.innerWidth / 2 - data.canvas.width / 2), e.pageY - 71);
