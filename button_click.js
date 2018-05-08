@@ -208,6 +208,61 @@ function button_draw_mirror(ev) {
     document.getElementById("svg").appendChild(anim.svg);
 }
 
+function button_draw_mirror2(ev) {
+    if (data.anim_focus == undefined)
+        return;
+    const anim = data.anim_focus;
+    const angle = -Number(document.getElementById("input_mirror_angle").value);
+
+    var angle_rad = ((-45 + angle) / 360) * 3.141592653589793 * 2;
+
+    var cos_angle = Math.cos(angle_rad);
+    var sin_angle = Math.sin(angle_rad);
+    console.log("cos_angle", cos_angle, "sin_angle", sin_angle)
+
+    var [minX, minY] = calcCenterVertex(anim.vertices, true)[0];
+    if (anim.vertices.length > 2) {
+        var area = calcAreaPolygon(anim.vertices);
+        [minX, minY] = calcCentroidPolygon(anim.vertices, area);
+    }
+    console.log(minX, minY);
+
+    anim.vertices = rotate_polygon(anim.vertices, cos_angle, sin_angle, minX, minY);
+
+    var mirror_y = Number(document.getElementById("input_mirror_y").value);
+    var vertices = rotate_straight_simple([
+        [mirror_y, -1000],
+        [mirror_y, 1400]
+    ], angle);
+
+    for (var index = 0; index < anim.vertices.length; index++) {
+        var pos_x = anim.vertices[index][1] - 0;
+        var pos_y = anim.vertices[index][2] - 0;
+
+        var distance_poin_straight = calc_distance_poin_straight(vertices, [pos_x, pos_y]);
+        console.log("distance_poin_straight", distance_poin_straight);
+
+        anim.vertices[index][1] = -pos_x + (2 * minX) - (2 * (minX - mirror_y));
+        anim.vertices[index][2] = pos_y;
+        anim.vertices[index][0].style.left = (anim.vertices[index][1] - 5) + "px";
+        anim.vertices[index][0].style.top = (anim.vertices[index][2] - 5) + "px";
+    }
+    [minX, minY] = calcCenterVertex(anim.vertices, true)[0];
+    if (anim.vertices.length > 2) {
+        var area = calcAreaPolygon(anim.vertices);
+        [minX, minY] = calcCentroidPolygon(anim.vertices, area);
+    }
+    angle_rad = ((-45 + angle) / 360) * 3.141592653589793 * 2;
+
+    cos_angle = Math.cos(angle_rad);
+    sin_angle = Math.sin(angle_rad);
+    anim.vertices = rotate_polygon(anim.vertices, cos_angle, sin_angle, minX, minY);
+
+    anim.svg.parentNode.removeChild(anim.svg);
+    anim.svg = updatePolygon(anim, anim.svg.id.split("_")[1]);
+    document.getElementById("svg").appendChild(anim.svg);
+}
+
 function divEdit(show, painel) {
     var divs = document.getElementsByClassName("edit");
     for (var index = 0; index < divs.length; index++)
@@ -218,10 +273,7 @@ function divEdit(show, painel) {
         document.getElementById("divEdit").style.opacity = 1;
         document.getElementById("divEdit").style.marginLeft = '0px';
         if (painel == "div_mirror") {
-            var mirror_y = Number(document.getElementById("input_mirror_y").value);
-
-            var svg = svgAresta("mirror_line", mirror_y, -1000, mirror_y, 1000, "#000000");
-            document.getElementById("svg").appendChild(svg);
+            update_mirror();
         }
     } else {
         document.getElementById("divEdit").style.opacity = 0;
@@ -230,13 +282,14 @@ function divEdit(show, painel) {
 }
 
 function update_mirror(event) {
-    document.getElementById("mirror_line").parentElement.removeChild(document.getElementById("mirror_line"));
+    if (document.getElementById("mirror_line"))
+        document.getElementById("mirror_line").parentElement.removeChild(document.getElementById("mirror_line"));
     var mirror_y = Number(document.getElementById("input_mirror_y").value);
     const angle = -Number(document.getElementById("input_mirror_angle").value);
 
     var vertices = rotate_straight_simple([
         [mirror_y, -1000],
-        [mirror_y, 1400]
+        [mirror_y, (1000+canvas_height())]
     ], angle);
 
     var svg = svgAresta("mirror_line", vertices[0][0], vertices[0][1], vertices[1][0], vertices[1][1], "#000000");

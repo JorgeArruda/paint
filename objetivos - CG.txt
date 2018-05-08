@@ -1,0 +1,24 @@
+---Objetivos
+    Desenhar:
+        - Point
+        - Line                  ok
+        - Polygon               ok
+    Editar desenhos, pelos vertices:    
+        - Point
+        - Line                  ok
+        - Polygon               ok
+    Transformar desenhos:
+        - Translate             ok
+        - Rotate                ok
+        - Scale                 ok
+        - Shear                 ok
+        - Reflection            ok
+    Selecionar área:
+        - Selecionar            ok
+        - Copiar
+        - Cortar
+        - Colar
+    Extra:
+        - Remover desenho       ok
+        - desfazer & refazer
+        - Feixo convexo

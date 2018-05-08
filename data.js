@@ -35,7 +35,6 @@ function createDrawing(operation, vertice, svg) {
         numVertice: getNumVertice(operation),
         show: true
     };
-    data.anim
     return drawing;
 }
 
@@ -85,4 +84,14 @@ function getNumVertice(type) {
         return 5;
     if (type == "openPolygon" || type == "openPolygon")
         return mouse.vertice.length;
+}
+
+function canvas_width(){
+    var canvas = document.getElementById("canvas");
+    return Number(canvas.width);
+}
+
+function canvas_height(){
+    var canvas = document.getElementById("canvas");
+    return Number(canvas.height);
 }
