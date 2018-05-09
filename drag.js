@@ -23,13 +23,16 @@ function dragover_handler(ev) {
     
         var anim = findVertice(mouse.idVertice);
         if (anim != undefined) {
-            anim[0].vertices[anim[2]][0].parentNode.removeChild(anim[0].vertices[anim[2]][0]);
+            if (anim[0].vertices[anim[2]] != undefined)
+                anim[0].vertices[anim[2]][0].parentNode.removeChild(anim[0].vertices[anim[2]][0]);
             anim[0].vertices[anim[2]] = updateVertex(anim[0].vertices[anim[2]], ev.pageX - (window.innerWidth / 2 - data.canvas.width / 2), ev.pageY - 71);
             document.getElementById("divCanvas").appendChild(anim[0].vertices[anim[2]][0]);
 
-            anim[0].svg.parentNode.removeChild(anim[0].svg);
-            anim[0].svg = updatePolygon(anim[0], String(anim[1] + 1));
-            document.getElementById("svg").appendChild(anim[0].svg);
+            if (anim[0].svg != undefined) {
+                anim[0].svg.parentNode.removeChild(anim[0].svg);
+                anim[0].svg = updatePolygon(anim[0], String(anim[1] + 1));
+                document.getElementById("svg").appendChild(anim[0].svg);
+            }
         }
     }
 

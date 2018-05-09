@@ -1,6 +1,10 @@
-function createPolygon(drawing) {
-    console.log("createPolygon(", drawing.type, ")", getNumVertice(drawing.type));
+function createPolygon(drawing, raio_point=1) {
+    console.log("createPolygon(", drawing.type, ")", drawing);
     var points = [];
+    if (drawing.type == "point") {
+        return svgCircle(data.drawing + "_" + data.anim.length, raio_point, drawing.vertices[0][1], drawing.vertices[0][2]);
+    }
+
     if (drawing.type == "openPolygon") {
         for (var index = 0; index < drawing.vertices.length; index++)
             points.push([drawing.vertices[index][1], drawing.vertices[index][2]]);
@@ -9,7 +13,7 @@ function createPolygon(drawing) {
     }
 
     if (drawing.numVertice == 2)
-        return svgAresta("line_" + data.anim.length, drawing.vertices[1][1], drawing.vertices[1][2], drawing.vertices[0][1], drawing.vertices[0][2]);
+        return svgLine("line_" + data.anim.length, drawing.vertices[1][1], drawing.vertices[1][2], drawing.vertices[0][1], drawing.vertices[0][2]);
 
     if (drawing.numVertice > 2 || drawing.type == "closedPolygon") {
         for (var index = 0; index < drawing.vertices.length; index++)
@@ -19,8 +23,13 @@ function createPolygon(drawing) {
     }
 }
 
-function updatePolygon(drawing, id) {
+function updatePolygon(drawing, id, raio_point=1) {
     var points = [];
+
+    if (drawing.type == "point") {
+        return svgCircle(drawing.type + "_" + id, drawing.width/2, drawing.vertices[0][1], drawing.vertices[0][2], drawing.color);
+    }
+
     if (drawing.type == "openPolygon") {
         for (var index = 0; index < drawing.vertices.length; index++)
             points.push([drawing.vertices[index][1], drawing.vertices[index][2]]);
@@ -29,7 +38,7 @@ function updatePolygon(drawing, id) {
     }
 
     if (drawing.numVertice == 2)
-        return svgAresta("line_" + id, drawing.vertices[1][1], drawing.vertices[1][2], drawing.vertices[0][1], drawing.vertices[0][2], drawing.color);
+        return svgLine("line_" + id, drawing.vertices[1][1], drawing.vertices[1][2], drawing.vertices[0][1], drawing.vertices[0][2], drawing.color);
 
     if (drawing.numVertice > 2 || drawing.type == "closedPolygon") {
         for (var index = 0; index < drawing.vertices.length; index++)
@@ -70,7 +79,7 @@ function drawVertice(posX, posY) {
     document.getElementById("divCanvas").appendChild(vertice);
 
     // Check num of vertex and draw polygon/line
-    if (data.drawing != "polygon" && data.drawing != "openPolygon" && data.drawing != "closedPolygon" && mouse.vertice.length % getNumVertice(data.drawing) == 0) {
+    if (data.drawing != "point" && data.drawing != "polygon" && data.drawing != "openPolygon" && data.drawing != "closedPolygon" && mouse.vertice.length % getNumVertice(data.drawing) == 0) {
         data.anim.push(createDrawing(data.drawing, mouse.vertice, undefined));
 
         data.anim[data.anim.length - 1].svg = createPolygon(data.anim[data.anim.length - 1]);
@@ -96,6 +105,24 @@ function drawPolygon() {
 
     if (data.anim[data.anim.length - 1].svg != undefined)
         document.getElementById("svg").appendChild(data.anim[data.anim.length - 1].svg);
+
+    mouse.vertice = [];
+}
+
+function drawAllPoints() {
+    if (mouse.vertice.length < 1)
+        return;
+    
+    var width = Number( document.getElementById("input_point_width").value );
+        
+    for (var index = 0; index < mouse.vertice.length; index++) {
+        mouse.vertice[index][0].id = "vertice_"+String(data.anim.length)+"_1";
+        data.anim.push(createDrawing(data.drawing, [mouse.vertice[index]], undefined, width));
+        data.anim[data.anim.length - 1].svg = createPolygon(data.anim[data.anim.length - 1], width/2);
+        data.anim[data.anim.length - 1].numVertice = mouse.vertice.length;
+        if (data.anim[data.anim.length - 1].svg != undefined)
+            document.getElementById("svg").appendChild(data.anim[data.anim.length - 1].svg);
+    }
 
     mouse.vertice = [];
 }

@@ -1,4 +1,23 @@
-function svgAresta(id, x1, y1, x2, y2, color = undefined) {
+function svgCircle(id, raio, cx, cy, color = undefined) {
+    console.log("Draw point", id, raio, cx, cy);
+    if (typeof (id) != 'string')
+        return;
+    var circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    circle.setAttribute("id", id);
+    circle.setAttribute("r", raio);
+    circle.setAttribute("cx", cx-1);
+    circle.setAttribute("cy", cy-1);
+    if (color != undefined) {
+        circle.setAttribute("fill", color != undefined ? color : data.color);
+    } else {
+        circle.setAttribute("fill", data.color);
+    }
+    circle.setAttribute("fill-width", 2);
+    circle.setAttribute("onclick", "click_svg(evt);");
+    return circle;
+}
+
+function svgLine(id, x1, y1, x2, y2, color = undefined) {
     if (typeof (id) != 'string')
         return;
     var line = document.createElementNS("http://www.w3.org/2000/svg", "line");
@@ -16,7 +35,6 @@ function svgAresta(id, x1, y1, x2, y2, color = undefined) {
     line.setAttribute("onclick", "click_svg(evt);");
     return line;
 }
-
 function svgClosedPolygon(id, vertices, color = undefined) {
     console.log("svgClosedPolygon(id, vertices)", id, vertices);
     if (typeof (id) != 'string')

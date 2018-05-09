@@ -26,10 +26,11 @@ var mouse = {
  * @param {any[]} vertice [ Array of vertices, a vertex is [DOM <img>, posX, posY] ]
  * @param {[object]} svg [ DOM <line/polygon/polyline> ]
  */
-function createDrawing(operation, vertice, svg) {
+function createDrawing(operation, vertice, svg, width=undefined) {
     var drawing = {
         color: data.color,
         type: operation,
+        width: Number(width),
         vertices: vertice, //[<img>, posX, posY]
         svg: svg,
         numVertice: getNumVertice(operation),

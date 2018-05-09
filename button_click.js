@@ -18,20 +18,19 @@ function buttons_drawing(ev) {
         data.drawing = undefined;
         data.canvas.style.zIndex = "1";
         data.svg.style.zIndex = "0";
-        if (ev.target.id == "polygon") {
-            console.log("ev.target.id == 'polygon'");
-            divEdit(false, "div_polygon");
+        if (ev.target.id == "polygon" || ev.target.id == "point") {
+            divEdit(false, "div_"+ev.target.id);
         }
     } else {
         data.drawing = ev.target.id;
         data.canvas.style.zIndex = "0";
         data.svg.style.zIndex = "1";
-        if (ev.target.id == "polygon") {
-            console.log("ev.target.id == 'polygon'");
-            divEdit(true, "div_polygon");
+        if (ev.target.id == "polygon" || ev.target.id == "point") {
+            console.log("Click drawing", ev.target.id);
+            divEdit(true, "div_"+ev.target.id);
         } else {
-            console.log("ev.target.id != 'polygon'");
             divEdit(false, "div_polygon");
+            divEdit(false, "div_point");
         }
     }
 
@@ -123,7 +122,7 @@ function button_draw_rotate(ev) {
     const anim = data.anim_focus;
 
     var angle = Number(document.getElementById("input_angle").value);
-    if (document.getElementById("radio_img_1").style.boxShadow != "none")
+    if (document.getElementById("radioimg_1").style.boxShadow != "none")
         angle = -angle;
 
     var angle_rad = ((angle) / 360) * 3.141592653589793 * 2;
@@ -193,7 +192,7 @@ function divEdit(show, painel) {
     var divs = document.getElementsByClassName("edit");
     for (var index = 0; index < divs.length; index++)
         divs[index].style.display = 'none';
-    const transform = (painel == "div_polygon" || painel == "div_translate" || painel == "div_scale" || painel == "div_shear" || painel == "div_rotate" || painel == "div_mirror");
+    const transform = (painel == "div_polygon" || painel == "div_point" || painel == "div_translate" || painel == "div_scale" || painel == "div_shear" || painel == "div_rotate" || painel == "div_mirror");
     if (show && transform) {
         document.getElementById(painel).style.display = 'block';
         document.getElementById("divEdit").style.opacity = 1;
@@ -227,7 +226,7 @@ function update_mirror(event) {
         ], angle);
     }
 
-    var svg = svgAresta("mirror_line", vertices[0][0], vertices[0][1], vertices[1][0], vertices[1][1], "#000000");
+    var svg = svgLine("mirror_line", vertices[0][0], vertices[0][1], vertices[1][0], vertices[1][1], "#000000");
     document.getElementById("svg").appendChild(svg);
     return vertices;
 }

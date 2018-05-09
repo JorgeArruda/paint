@@ -1,10 +1,10 @@
 ---Objetivos
     Desenhar:
-        - Point
+        - Point                 ok
         - Line                  ok
         - Polygon               ok
     Editar desenhos, pelos vertices:    
-        - Point
+        - Point                 ok
         - Line                  ok
         - Polygon               ok
     Transformar desenhos:
