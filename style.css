@@ -214,6 +214,15 @@ body {
     box-shadow: rgb(0, 0, 0) 2px 2px 6px;
     cursor: pointer;
 }
+.radiomirror {
+    width: 25px;
+    height: 25px;
+    border: 1px solid #312e2e;
+    border-radius: 5px;
+    box-shadow: rgb(0, 0, 0) 2px 2px 6px;
+    cursor: pointer;
+}
+
 
 .vertice {
     position: absolute;

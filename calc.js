@@ -72,10 +72,10 @@ function rotate_straight_simple(vertices, angle) {
 }
 
 function calc_equation_straight(x1, y1, x2, y2) {
-    return [(y1 - y2), (x1 - x2), ((x1 * y2) - x2 - y1)];
+    return [(y1 - y2), (x2 - x1), ((x1 * y2) - x2 - y1)];
 }
 
-function calc_distance_poin_straight(straight, point) {
+function calc_distance_point_straight(straight, point) {
     var [a, b, c] = calc_equation_straight(Number(straight[0][0]), Number(straight[0][1]), Number(straight[1][0]), Number(straight[1][1]));
     console.log("[a, b, c]", [a, b, c]);
     var [x, y] = [Number(point[0]), Number(point[1])];

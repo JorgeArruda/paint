@@ -151,28 +151,26 @@
                 </div>
                 <div style="margin-top: 10px; display: block; align-items: center;">
                     <div style="width: 68px; height: 25px; margin-left: 18px; padding-top: 8px;">
-                        <img id="radio_img_1" class="radioimg" onclick="button_radio_img(event)" src="icons/rotate-left.svg">
-                        <img id="radio_img_2" class="radioimg" onclick="button_radio_img(event)" src="icons/rotate-right.svg" style="margin-left: 8px; box-shadow: none;">
+                        <img id="radioimg_1" class="radioimg" onclick="button_radio_img(event)" src="icons/rotate-left.svg">
+                        <img id="radioimg_2" class="radioimg" onclick="button_radio_img(event)" src="icons/rotate-right.svg" style="margin-left: 8px; box-shadow: none;">
                     </div>
                 </div>
             </div>
         </div>
         <div id="div_mirror" class="edit">
             <p class="textButton" onclick="button_draw_mirror(event);">Mirror</p>
-            <p class="textButton" onclick="button_draw_mirror2(event);">Mirror2</p>
-            
             <div style="padding: 5px; padding-top: 15px; padding-bottom: 15px; background: rgba(63, 58, 55, 0.78); box-shadow: rgb(0, 0, 0) 2px 2px 5px; border: 1px solid #403a3a;">
                 <div style="display: block; align-items: center;">
-                    <p class="text" style="margin-left: 1px; position: relative; display: inline; font-size: 12px;">y :</p>
-                    <input id="input_mirror_y" class="inNumber" type="number" value=200 onclick="update_mirror(event)" onchange="update_mirror(event)"
-                        min="0" max="400" step="10">
+                    <p class="text" style="margin-left: 1px; position: relative; display: inline; font-size: 11px;">Pos :</p>
+                    <input id="input_mirror" class="inNumber" type="number" value=200 onclick="update_mirror(event)" onchange="update_mirror(event)"
+                        min="0" max="400" step="10" style="width: 50px;">
                     <p class="text" style="margin-left: 1px; position: relative; display: inline; font-size: 11px;">px</p>
                 </div>
                 <div style="margin-top: 10px; display: block; align-items: center;">
-                    <p class="text" style="margin-left: 2px; position: relative; display: inline; font-size: 12px;">Angle :</p>
-                    <input id="input_mirror_angle" class="inNumber" type="number" value=0 onclick="update_mirror(event)" onchange="update_mirror(event)"
-                        min="-9000" max="9000" step="5" style="width: 40px;">
-                    <p class="text" style="margin-left: 2px; position: relative; display: inline; font-size: 14px;">°</p>
+                    <div style="width: 68px; height: 25px; margin-left: 18px; padding-top: 8px;">
+                        <img id="radiomirror_1" class="radiomirror" onclick="button_radio_img(event);update_mirror(event)" src="icons/mirror-vertical.svg">
+                        <img id="radiomirror_2" class="radiomirror" onclick="button_radio_img(event);update_mirror(event)" src="icons/mirror-horizontal.svg" style="margin-left: 8px; box-shadow: none;">
+                    </div>
                 </div>
             </div>
         </div>
