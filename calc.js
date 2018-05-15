@@ -53,7 +53,7 @@ function rotate_polygon(vertices, cos_angle, sin_angle, minX, minY) {
     return vertices;
 }
 
-function rotate_straight_simple(vertices, angle) {
+function rotate_line_simple(vertices, angle) {
 
     const angle_rad = ((Number(angle)) / 360) * 3.141592653589793 * 2;
 
@@ -71,12 +71,12 @@ function rotate_straight_simple(vertices, angle) {
     return vertices;
 }
 
-function calc_equation_straight(x1, y1, x2, y2) {
+function calc_equation_line(x1, y1, x2, y2) {
     return [(y1 - y2), (x2 - x1), ((x1 * y2) - x2 - y1)];
 }
 
-function calc_distance_point_straight(straight, point) {
-    var [a, b, c] = calc_equation_straight(Number(straight[0][0]), Number(straight[0][1]), Number(straight[1][0]), Number(straight[1][1]));
+function calc_distance_point_line(line, point) {
+    var [a, b, c] = calc_equation_line(Number(line[0][0]), Number(line[0][1]), Number(line[1][0]), Number(line[1][1]));
     console.log("[a, b, c]", [a, b, c]);
     var [x, y] = [Number(point[0]), Number(point[1])];
     console.log("[x, y]", [x, y]);

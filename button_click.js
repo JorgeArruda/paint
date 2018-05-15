@@ -154,10 +154,8 @@ function button_draw_mirror(ev) {
     anim.vertices = rotate_polygon(anim.vertices, cos_angle, sin_angle, minX, minY);
 
     var mirror = Number(document.getElementById("input_mirror").value);
-    var vertices_straight = update_mirror();
 
     for (var index = 0; index < anim.vertices.length; index++) {
-        var distance_poin_straight = calc_distance_point_straight(vertices_straight, [anim.vertices[index][1], anim.vertices[index][2]]);
         const distance = (2 * minX) - (2 * (minX - mirror));
         var pos_x = anim.vertices[index][1] - 0;
         var pos_y = anim.vertices[index][2] - 0;
@@ -214,13 +212,13 @@ function update_mirror(event) {
     var vertices;
     if (document.getElementById("radiomirror_2").style.boxShadow == "none") {
         angle = 0;
-        vertices = rotate_straight_simple([
+        vertices = rotate_line_simple([
             [mirror, -1000],
             [mirror, (1000 + canvas_height())]
         ], angle);
     } else {
         angle = 0;
-        vertices = rotate_straight_simple([
+        vertices = rotate_line_simple([
             [-1000, mirror],
             [(1000 + canvas_height()), mirror]
         ], angle);
