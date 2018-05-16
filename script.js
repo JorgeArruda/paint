@@ -98,6 +98,11 @@ function drawPolygon() {
         data.drawing = "openPolygon";
     else
         data.drawing = "closedPolygon";
+    if (document.getElementById("convexHull").checked){
+        data.drawing = "closedPolygon";
+        mouse.vertice = convexHull(mouse.vertice);
+        console.log('Polygon convex', polygon);
+    }
     data.anim.push(createDrawing(data.drawing, mouse.vertice, undefined));
 
     data.anim[data.anim.length - 1].svg = createPolygon(data.anim[data.anim.length - 1]);

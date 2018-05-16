@@ -82,3 +82,75 @@ function calc_distance_point_line(line, point) {
     console.log("[x, y]", [x, y]);
     return (Math.abs((a * x) + (b * y) + c)) / (Math.sqrt((a * a) + (b * b)));
 }
+
+
+function cross(a, b, o) {
+    return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+}
+
+/** * @param points An array of [X, Y] coordinates */
+function convexHull(vertices) {
+    var points = [];
+
+    for (var index = 0; index < vertices.length; index++) {
+        points.push([vertices[index][1], vertices[index][2]]);
+    }
+
+    // Inicio
+    points.sort(function (a, b) {
+        return a[0] == b[0] ? a[1] - b[1] : a[0] - b[0];
+    });
+    var lower = [];
+    for (var i = 0; i < points.length; i++) {
+        while (lower.length >= 2 && cross(lower[lower.length - 2], lower[lower.length - 1], points[i]) <= 0) {
+            lower.pop();
+        }
+        lower.push(points[i]);
+    }
+    var upper = [];
+    for (var i = points.length - 1; i >= 0; i--) {
+        while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], points[i]) <= 0) {
+            upper.pop();
+        }
+        upper.push(points[i]);
+    }
+    upper.pop();
+    lower.pop();
+
+    var polygon_convex = lower.concat(upper);
+    mouse.vertice = [];
+
+    removeVertices();
+    for (var index = 0; index < polygon_convex.length; index++) {
+        var vertice = createVertex("vertice_" + data.anim.length + "_" + (mouse.vertice.length + 1));
+        mouse.vertice.push([ vertice, polygon_convex[index][0], polygon_convex[index][1] ]);
+        vertice.style.left = (polygon_convex[index][0] - 5) + "px";
+        vertice.style.top = (polygon_convex[index][1] - 5) + "px";
+        document.getElementById("divCanvas").appendChild(vertice);
+    }
+
+    return mouse.vertice;
+}
+
+
+function remove_vertices_internos(min_x, min_y, max_x, max_y, vertices) {
+    var newvertices = [];
+    console.log('Lista original: ', vertices);
+    for (var index = 0; index < vertices.length; index++) {
+        var dentro_x = vertices[index][0] > min_x && vertices[index][0] < max_x;
+        var dentro_y = vertices[index][1] > min_y && vertices[index][1] < max_y;
+        if ( dentro_x && dentro_y )
+            console.log('  Vertex interno removido:', vertices[index]);
+        else
+            newvertices.push(vertices[index]);
+    }
+    console.log('Lista podada: ', newvertices);
+}
+
+function calc_distance_point(point1, point2) {
+    var xa = point1[0];
+    var xb = point2[0];
+    var ya = point1[1];
+    var yb = point2[1];
+    return Math.abs(Math.sqrt(((xb - xa) * (xb - xa)) + ((yb - ya) * (yb - ya))));
+}
