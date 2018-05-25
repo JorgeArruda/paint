@@ -13,11 +13,11 @@ function canvasDrawRect(canvas, points, color) {
         return;
     var contexto = canvas.getContext("2d");
     contexto.strokeStyle = color;
-    contexto.lineWidth = 1;
+    contexto.lineWidth = 2;
     contexto.lineCap = 'square';
     contexto.beginPath();
-    contexto.moveTo(points[0][1] - 15, points[0][2] - 18);
-    contexto.lineTo(points[1][1] - 15, points[1][2] - 18);
+    contexto.moveTo(points[0][1], points[0][2]);
+    contexto.lineTo(points[1][1], points[1][2]);
     contexto.stroke();
     contexto.closePath();
 }
@@ -35,7 +35,7 @@ function canvasDrawPolygon(canvas, points, color) {
     }
     contexto.closePath();
     contexto.strokeStyle = color;
-    contexto.lineWidth = 1;
+    contexto.lineWidth = 5;
     contexto.lineCap = 'square';
     contexto.stroke();
     contexto.fillStyle = color;
@@ -43,10 +43,15 @@ function canvasDrawPolygon(canvas, points, color) {
 }
 
 function canvas_draw() {
+    console.log('canvas_draw()');
     for (let index = 0; index < data.anim.length; index++) {
         const element = data.anim[index];
         if (element.type == 'line') {
             canvasDrawRect(data.canvas, element.vertices, element.color);
         }
     }
+}
+
+function buttonSave(event) {
+    canvas_draw();
 }
