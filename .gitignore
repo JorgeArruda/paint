@@ -1,0 +1,6 @@
+*.pyc
+*.bak
+__pycache__
+env
+.vscode
+*.cpython-35.pyc

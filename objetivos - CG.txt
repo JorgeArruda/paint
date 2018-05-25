@@ -21,4 +21,4 @@
     Extra:
         - Remover desenho       ok
         - desfazer & refazer
-        - Feixo convexo
+        - Feixo convexo         ok
